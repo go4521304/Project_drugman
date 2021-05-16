@@ -50,8 +50,8 @@ class Main_GUI:
                 self.canvas_C.create_line(0,100*j,870,100*j)
 
 
-        self.Pharmachy.place(x=100,y=250)
-        self.Medicine.place(x=100,y=500)
+        self.Pharmachy.place(x=60,y=250)
+        self.Medicine.place(x=60,y=550)
         #1
         window.mainloop()
 
