@@ -4,9 +4,11 @@ from tkinter import *
 
 class Main_GUI:
     def Draw_P(self): # Parmachy
-        print("약국")
+        self.canvas.delete('m')
+        self.canvas.create_rectangle(350,20,1180,880,fill="yellow",tags='p')
     def Draw_M(self): # Medicine
-        print("약")
+        self.canvas.delete('p')
+        self.canvas.create_rectangle(350,20,1180,880,fill="blue",tags='m')
 
     def __init__(self):
         window = Tk()
@@ -24,7 +26,8 @@ class Main_GUI:
                 self.canvas.create_line(100*i,0,100*i,900)
                 self.canvas.create_line(0,100*j,1200,100*j)
 
-        self.Pharmachy.place(x=0,y=0)
+        self.Pharmachy.place(x=100,y=250)
+        self.Medicine.place(x=100,y=500)
 
         window.mainloop()
 
