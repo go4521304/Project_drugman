@@ -17,7 +17,8 @@ class Main_GUI:
         self.canvas = Canvas(window,bg = 'white', width = 1200, height = 900)
         self.canvas.pack()
 
-        self.Pharmachy = Button(window, text='약', image='약.png',command=self.Draw_M)
+        image_medicine = PhotoImage(file='./resource/medicine.png')
+        self.Pharmachy = Button(window, text='약', image=image_medicine, command=self.Draw_M)
         self.Medicine = Button(window, text='국', command=self.Draw_P)
 
         # 디버그용 그리드
