@@ -4,29 +4,51 @@ from tkinter import *
 
 class Main_GUI:
     def Draw_P(self): # Parmachy
-        self.canvas.delete('m')
-        self.canvas.create_rectangle(350,20,1180,880,fill="yellow",tags='p')
+        self.canvas_C.delete('m')
+        self.canvas_C.create_rectangle(20,20,850,880,fill="yellow",tags='p')
     def Draw_M(self): # Medicine
-        self.canvas.delete('p')
-        self.canvas.create_rectangle(350,20,1180,880,fill="blue",tags='m')
+        self.canvas_C.delete('p')
+        self.canvas_C.create_rectangle(20,20,850,880,fill="blue",tags='m')
 
     def __init__(self):
+        # 창 기본설정 (타이틀, 크기, 크기조정 불가)
         window = Tk()
         window.title("약 좀 주세요 ~약 먹을 시간~")
+        window.geometry('1200x900')
+        window.resizable(False, False)
+        
 
-        self.canvas = Canvas(window,bg = 'white', width = 1200, height = 900)
-        self.canvas.pack()
+        # 프레임 분리
+        frameB = Frame(window, bg='white', width=330, height=900)
+        frameB.grid(row=0, column=0)
+        frameC = Frame(window, bg='white', width=870, height=900)
+        frameC.grid(row=0, column=1)
+        
 
-        image_medicine = PhotoImage(file='./resource/medicine.png')
-        image_parmacy = PhotoImage(file='./resource/Parmacy.png')
-        self.Pharmachy = Button(window, text='약', image=image_medicine, command=self.Draw_M)
-        self.Medicine = Button(window, text='국', image=image_parmacy, command=self.Draw_P)
+        # 캔버스 생성
+        self.canvas_B = Canvas(frameB, width=330, height=900)
+        self.canvas_B.place(x=0, y=0)
+        self.canvas_C = Canvas(frameC,bg='white', width=870, height=900)
+        self.canvas_C.place(x=0, y=0)
+
+        # 이미지 관리용 dict 생성
+        image = {}
+
+        image['medicine'] = PhotoImage(file='./resource/medicine.png')
+        image['pharmacy'] = PhotoImage(file='./resource/pharmacy.png')
+        self.Pharmachy = Button(frameB, text='약', image=image['medicine'], command=self.Draw_M)
+        self.Medicine = Button(frameB, text='국', image=image['pharmacy'], command=self.Draw_P)
 
         # 디버그용 그리드
-        for i in range(12):
+        for i in range(4):
             for j in range(9):
-                self.canvas.create_line(100*i,0,100*i,900)
-                self.canvas.create_line(0,100*j,1200,100*j)
+                self.canvas_B.create_line(100*i,0,100*i,900)
+                self.canvas_B.create_line(0,100*j,330,100*j)
+        for i in range(9):
+            for j in range(9):
+                self.canvas_C.create_line(100*i,0,100*i,900)
+                self.canvas_C.create_line(0,100*j,870,100*j)
+
 
         self.Pharmachy.place(x=100,y=250)
         self.Medicine.place(x=100,y=500)
