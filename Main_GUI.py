@@ -17,7 +17,7 @@ class Main_GUI:
         self.canvas = Canvas(window,bg = 'white', width = 1200, height = 900)
         self.canvas.pack()
 
-        self.Pharmachy = Button(window, text='약', command=self.Draw_M)
+        self.Pharmachy = Button(window, text='약', image='약.png',command=self.Draw_M)
         self.Medicine = Button(window, text='국', command=self.Draw_P)
 
         # 디버그용 그리드
@@ -28,7 +28,7 @@ class Main_GUI:
 
         self.Pharmachy.place(x=100,y=250)
         self.Medicine.place(x=100,y=500)
-
+        #1
         window.mainloop()
 
 if __name__ == "__main__":
