@@ -18,8 +18,9 @@ class Main_GUI:
         self.canvas.pack()
 
         image_medicine = PhotoImage(file='./resource/medicine.png')
+        image_parmacy = PhotoImage(file='./resource/Parmacy.png')
         self.Pharmachy = Button(window, text='약', image=image_medicine, command=self.Draw_M)
-        self.Medicine = Button(window, text='국', command=self.Draw_P)
+        self.Medicine = Button(window, text='국', image=image_parmacy, command=self.Draw_P)
 
         # 디버그용 그리드
         for i in range(12):
