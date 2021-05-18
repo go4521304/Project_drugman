@@ -5,10 +5,10 @@ from tkinter import *
 class Main_GUI:
     def Draw_P(self): # Parmachy
         self.canvas_C.delete('m')
-        self.canvas_C.create_rectangle(20,20,850,880,fill="yellow",tags='p')
+        self.canvas_C.create_rectangle(20,20,850,880,outline="yellow",tags='p',width = 5)
     def Draw_M(self): # Medicine
         self.canvas_C.delete('p')
-        self.canvas_C.create_rectangle(20,20,850,880,fill="blue",tags='m')
+        self.canvas_C.create_rectangle(20,20,850,880,outline = "blue",tags='m',width = 3)
 
     def __init__(self):
         # 창 기본설정 (타이틀, 크기, 크기조정 불가)
@@ -42,12 +42,12 @@ class Main_GUI:
         # 디버그용 그리드
         for i in range(4):
             for j in range(9):
-                self.canvas_B.create_line(100*i,0,100*i,900)
-                self.canvas_B.create_line(0,100*j,330,100*j)
+                self.canvas_B.create_line(100*i,0,100*i,900,fill = "gray")
+                self.canvas_B.create_line(0,100*j,330,100*j,fill = "yellow")
         for i in range(9):
             for j in range(9):
-                self.canvas_C.create_line(100*i,0,100*i,900)
-                self.canvas_C.create_line(0,100*j,870,100*j)
+                self.canvas_C.create_line(100*i,0,100*i,900,fill = "gray")
+                self.canvas_C.create_line(0,100*j,870,100*j,fill = "red")
 
 
         self.Pharmachy.place(x=60,y=250)
