@@ -8,7 +8,6 @@ conn = http.client.HTTPConnection("apis.data.go.kr")
 serviceKey = urllib.parse.quote("6LhIfl4AUMeRlvkH0mimycui3rFJsijVvZWIHR4mt5/symnzRkA+Zi4WZJ8ietyQ/LnNBAKhnSirL3lRX7WllA==")
 Md = Tk()
 #class Medicine():
-SearchListBox = (0)
 
 def Main():
     Md.title("Medicine")
@@ -38,6 +37,7 @@ def Search_efcyQesitm():
     SearchListBox.insert(0, "증상")
     SearchListBox.insert(1, "약 이름")
     SearchListBox.insert(2, "제약사")
+
     SearchListBox.pack()
     SearchListBox.place(x=30, y=40)
 
