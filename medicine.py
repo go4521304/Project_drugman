@@ -17,13 +17,18 @@ def Main():
     req = conn.getresponse()
     print(req.status, req.reason)
     print(req.read().decode('utf-8'))
-    Md.create_rectangle()
+
+    Base_Canvas = Canvas(Md,width =570,height = 85,bg="light gray",)
+    Base_Canvas.place(x=10,y=10)
+
+    Info_Canvas = Canvas(Md, width=570, height=670, bg="light gray", )
+    Info_Canvas.place(x=10, y=110)
 
 def Search_efcyQesitm():
     global SearchListBox
     ListBoxScrollbar = Scrollbar(Md)
     ListBoxScrollbar.pack()
-    ListBoxScrollbar.place(x=130, y=50)
+    ListBoxScrollbar.place(x=150, y=30)
 
     TempFont = font.Font(Md, size=15, weight='bold', family='Consolas')
     SearchListBox = Listbox(Md, font=TempFont, activestyle='none',
@@ -34,7 +39,7 @@ def Search_efcyQesitm():
     SearchListBox.insert(1, "약 이름")
     SearchListBox.insert(2, "제약사")
     SearchListBox.pack()
-    SearchListBox.place(x=10, y=60)
+    SearchListBox.place(x=30, y=40)
 
     ListBoxScrollbar.config(command=SearchListBox.yview)
 
@@ -43,13 +48,13 @@ def InitInputLabel():
     TempFont = font.Font(Md, size=15, weight='bold', family = 'Consolas')
     InputLabel = Entry(Md, font = TempFont, width = 26, relief = 'ridge')
     InputLabel.pack()
-    InputLabel.place(x=160, y=60)
+    InputLabel.place(x=180, y=40)
 
 def InitSearchButton():
     TempFont = font.Font(Md, size=12, weight='bold', family = 'Consolas')
     SearchButton = Button(Md, font = TempFont, text="검색",  command=SearchButtonAction)
     SearchButton.pack()
-    SearchButton.place(x=480, y=55)
+    SearchButton.place(x=490, y=35)
 
 def SearchButtonAction():
     global SearchListBox
