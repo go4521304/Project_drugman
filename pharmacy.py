@@ -6,7 +6,6 @@ conn = http.client.HTTPConnection("apis.data.go.kr")
 
 class Pharmacy:
     SERVICE_KEY = urllib.parse.quote("2ZPJttwEWTlLBUXFd85FaqaDuDsSw7BRwX5pChZ2epOCy+i0RjC5jcchv1CplZTKF/x2GiNPOC99KeY31otTEQ==")
-    NUM_OF_ROWS = 10
 
     pharmacy = None
     index = 0
@@ -46,7 +45,7 @@ class Pharmacy:
         if strXml == None:
             print('Fail, Empty!')
             return
-            
+
         from xml.etree import ElementTree
         tree = ElementTree.fromstring(strXml)
 
