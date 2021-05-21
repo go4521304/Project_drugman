@@ -21,17 +21,8 @@ class Pharmacy:
         Q0 = urllib.parse.quote(add1)  # 주소 (시도)
         Q1 = urllib.parse.quote(add2)  # 주소 (시군구)
 
-        # 두번 호출해서 총 40개를 받아옴
         conn.request("GET","/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire?serviceKey=" + self.SERVICE_KEY 
-        + "&Q0=" + Q0 + "&Q1=" + Q1 + "&ORD=NAME" + "&pageNo=1" + "&numOfRows=20")
-        req = conn.getresponse()
-        if req.status == 200:
-            self.extractData(req.read().decode('utf-8'))
-        else:
-            print(req.status,req.reason)
-
-        conn.request("GET","/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire?serviceKey=" + self.SERVICE_KEY 
-        + "&Q0=" + Q0 + "&Q1=" + Q1 + "&ORD=NAME" + "&pageNo=2" + "&numOfRows=20")
+        + "&Q0=" + Q0 + "&Q1=" + Q1 + "&ORD=NAME" + "&pageNo=1" + "&numOfRows=100")
         req = conn.getresponse()
         if req.status == 200:
             self.extractData(req.read().decode('utf-8'))
@@ -64,3 +55,4 @@ class Pharmacy:
 test = Pharmacy()
 test.request()
 print(test.pharmacy)
+print(len(test.pharmacy.index))
