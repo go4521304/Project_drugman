@@ -15,17 +15,16 @@ class Pharmacy:
         pass
 
     def request(self, add1 = "경기도", add2="시흥시"):
+        # 데이터프레임 생성
         self.pharmacy = pd.DataFrame(columns=['주소', '약국 이름', '전화번호', 'ID', 'LON', 'LAT'])
         self.index = 0
 
         Q0 = urllib.parse.quote(add1)  # 주소 (시도)
         Q1 = urllib.parse.quote(add2)  # 주소 (시군구)
-        QT = urllib.parse.quote("")  # 월~일요일, 공휴일: 1~8
-        QN = urllib.parse.quote("") # 기관명
-        ORD = urllib.parse.quote("NAME") # 순서
 
+        # 두번 호출해서 총 40개를 받아옴
         conn.request("GET","/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire?serviceKey=" + self.SERVICE_KEY 
-        + "&Q0=" + Q0 + "&Q1=" + Q1 + "&ORD=" + ORD + "&pageNo=1" + "&numOfRows=20")
+        + "&Q0=" + Q0 + "&Q1=" + Q1 + "&ORD=NAME" + "&pageNo=1" + "&numOfRows=20")
         req = conn.getresponse()
         if req.status == 200:
             self.extractData(req.read().decode('utf-8'))
@@ -33,7 +32,7 @@ class Pharmacy:
             print(req.status,req.reason)
 
         conn.request("GET","/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire?serviceKey=" + self.SERVICE_KEY 
-        + "&Q0=" + Q0 + "&Q1=" + Q1 + "&ORD=" + ORD + "&pageNo=2" + "&numOfRows=20")
+        + "&Q0=" + Q0 + "&Q1=" + Q1 + "&ORD=NAME" + "&pageNo=2" + "&numOfRows=20")
         req = conn.getresponse()
         if req.status == 200:
             self.extractData(req.read().decode('utf-8'))
@@ -41,10 +40,13 @@ class Pharmacy:
             print(req.status,req.reason)
 
 
+    # 정보를 데이터 프레임에 집어넣음
     def extractData(self, strXml):
+        # 만약에 불러오기가 실패해서 비어있을 경우 종료
         if strXml == None:
-            print('fail')
+            print('Fail, Empty!')
             return
+            
         from xml.etree import ElementTree
         tree = ElementTree.fromstring(strXml)
 
@@ -55,13 +57,11 @@ class Pharmacy:
                 self.pharmacy.loc[self.index] = [i.find('dutyAddr').text, i.find('dutyName').text, 
                 i.find('dutyTel1').text, i.find('hpid').text, i.find('wgs84Lon').text, i.find('wgs84Lat').text]
                 self.index+=1
-
-
         else:
-            print('Load Fail')
+            print('Load Fail / Code : ' + resultCode.text)
         
 
-# 사용시 지우기!!
+# 나중에 임포트 할 때 지우기!!
 test = Pharmacy()
 test.request()
 print(test.pharmacy)
