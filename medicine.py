@@ -4,12 +4,13 @@ import tkinter.messagebox
 
 import urllib
 import http.client
+from medicine_new import *
 conn = http.client.HTTPConnection("apis.data.go.kr")
 serviceKey = urllib.parse.quote("6LhIfl4AUMeRlvkH0mimycui3rFJsijVvZWIHR4mt5/symnzRkA+Zi4WZJ8ietyQ/LnNBAKhnSirL3lRX7WllA==")
 Md = Tk()
-#class Medicine():
 
 def Main():
+
     Md.title("Medicine")
     Md.geometry("600x800")
     conn.request("GET", "http://apis.data.go.kr/1471000/DrbEasyDrugInfoService?serviceKey=" + serviceKey)
