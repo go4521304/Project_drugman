@@ -8,13 +8,13 @@ class Medicine:
 
     medicine = []
 
-    TYPE = {'0': '&entpName=', '1': '&itemName=', '2': '&efcyQesitm='}
+    TYPE = {1: '&entpName=', 2: '&itemName=', 0: '&efcyQesitm='}
     COLUMNS = ['업체명', '제품명', 'ID', '효능', '사용법', '주의사항 경고', '주의사항', '상호작용', '부작용', '보관법', '낱알 이미지']
 
     def __init__(self):
         pass
 
-    def request(self, type = '0', option = '유한양행'):
+    def request(self, type = 1, option = '유한양행'):
         # 리스트로 생성
         self.medicine.clear()
 

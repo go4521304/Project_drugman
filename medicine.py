@@ -11,7 +11,7 @@ class Medi:
         self.Md = Tk()
         self.Md.title("Medicine")
         self.Md.geometry("600x800")
-
+        self.medicine = Medicine()
         Base_Canvas = Canvas(self.Md,width =570,height = 85,bg="light gray",)
         Base_Canvas.place(x=10,y=10)
 
@@ -56,14 +56,14 @@ class Medi:
 
     def SearchButtonAction(self):
         iSearchIndex = self.SearchListBox.curselection()[0]
-        
+        key = self.InputLabel.get()
         if iSearchIndex == 0:
-            print("ㅇㅋ")
-            medicine.request(0,)
+            self.medicine.request(0,key)
+            print(self.medicine.medicine[0])
         elif iSearchIndex == 1:
-            medicine.request(1,)
+            self.medicine.request(1,key)
         elif iSearchIndex == 2:
-            medicine.request(2,)
+            self.medicine.request(2,key)
 
 
 
