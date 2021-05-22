@@ -49,10 +49,3 @@ class Medicine:
                 self.COLUMNS[8]:i.find('seQesitm').text, self.COLUMNS[9]:i.find('depositMethodQesitm').text, self.COLUMNS[10]:i.find('itemImage').text})
         else:
             print('Load Fail / Code : ' + resultCode.text)
-        
-
-# 나중에 임포트 할 때 지우기!!
-test = Medicine()
-test.request()
-print(test.medicine)
-print(len(test.medicine))
