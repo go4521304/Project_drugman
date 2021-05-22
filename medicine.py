@@ -34,8 +34,8 @@ class Medi:
                                 yscrollcommand=self.ListBoxScrollbar.set)
 
         self.SearchListBox.insert(0, "증상")
-        self.SearchListBox.insert(1, "약 이름")
-        self.SearchListBox.insert(2, "제약사")
+        self.SearchListBox.insert(1, "제약사")
+        self.SearchListBox.insert(2, "약이름")
 
         self.SearchListBox.pack()
         self.SearchListBox.place(x=30, y=40)
@@ -59,11 +59,13 @@ class Medi:
         key = self.InputLabel.get()
         if iSearchIndex == 0:
             self.medicine.request(0,key)
-            print(self.medicine.medicine[0])
+            print(len(self.medicine.medicine))
         elif iSearchIndex == 1:
             self.medicine.request(1,key)
+            print(self.medicine.medicine[9])
         elif iSearchIndex == 2:
             self.medicine.request(2,key)
+            print(self.medicine.medicine[9])
 
 
 

@@ -22,7 +22,7 @@ class Medicine:
         find_query = self.TYPE[type] + urllib.parse.quote(option)
 
         conn.request("GET","/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList?serviceKey=" + self.SERVICE_KEY 
-        + "&pageNo=1" + find_query + "&numOfRows=20" + '&type=xml')
+        + "&pageNo=1" + find_query + "&numOfRows=10" + '&type=xml')
         req = conn.getresponse()
         if req.status == 200:
             self.extractData(req.read().decode('utf-8'))
