@@ -15,10 +15,13 @@ class Medi:
         self.Md.geometry("600x800")
         self.medicine = Medicine()
 
-        Base_Canvas = Canvas(self.Md,width =570,height = 85,bg="light gray",)
+        fill_Canvas = Canvas(self.Md,width = 2000,height=2000,bg='light green')
+        fill_Canvas.place(x=-10,y=-100)
+
+        Base_Canvas = Canvas(self.Md,width =570,height = 85,bg="light blue",)
         Base_Canvas.place(x=10,y=10)
 
-        Info_Canvas = Canvas(self.Md, width=570, height=670, bg="light gray", )
+        Info_Canvas = Canvas(self.Md, width=570, height=670, bg="light blue", )
         Info_Canvas.place(x=10, y=110)
 
         self.Search_efcyQesitm()
@@ -79,31 +82,40 @@ class Medi:
             self.InitRenderText()
 
     def InitRenderText(self):
-        cm = ChainMap(*self.items)
         RenderTextScrollbar = Scrollbar(self.Md)
         RenderTextScrollbar.pack()
         RenderTextScrollbar.place(x=375, y=200)
 
-        TempFont = font.Font(self.Md, size=13, family='Consolas')
-        RenderText = Text(self.Md, width=80, height=50.5, relief='ridge',
+        TempFont = font.Font(self.Md, size=10, family='Consolas')
+        RenderText = Text(self.Md, width=80, height=50.5, relief='ridge',font = TempFont,
                           yscrollcommand=RenderTextScrollbar.set)
 
         for i in range(len(self.items)):
                 RenderText.insert(INSERT, "[")
                 RenderText.insert(INSERT, i + 1)
                 RenderText.insert(INSERT, "] ")
-                RenderText.insert(INSERT, "업체명: ")
-                RenderText.insert(INSERT, cm["업체명"])
-                RenderText.insert(INSERT, "\n")
-                RenderText.insert(INSERT, "업체명: ")
-                RenderText.insert(INSERT, cm["업체명"])
-                RenderText.insert(INSERT, "\n")
-                RenderText.insert(INSERT, "업체명: ")
-                RenderText.insert(INSERT, cm["업체명"])
-                RenderText.insert(INSERT, "\n")
-                RenderText.insert(INSERT, "업체명: ")
-                RenderText.insert(INSERT, cm["업체명"])
-                RenderText.insert(INSERT, "\n")
+                RenderText.insert(INSERT, "업체명 : ")
+                RenderText.insert(INSERT, self.items[i]["업체명"])
+                RenderText.insert(INSERT, "\n\n")
+                RenderText.insert(INSERT, "제품명 : ")
+                RenderText.insert(INSERT, self.items[i]["제품명"])
+                RenderText.insert(INSERT, "\n\n")
+                RenderText.insert(INSERT, "효능 : ")
+                RenderText.insert(INSERT, self.items[i]["효능"])
+                RenderText.insert(INSERT, "\n\n")
+                RenderText.insert(INSERT, "사용법 : ")
+                RenderText.insert(INSERT, self.items[i]["사용법"])
+                RenderText.insert(INSERT, "\n\n")
+                RenderText.insert(INSERT, "주의사항 : ")
+                RenderText.insert(INSERT, self.items[i]["주의사항"])
+                RenderText.insert(INSERT, "\n\n")
+                RenderText.insert(INSERT, "보관법 : ")
+                RenderText.insert(INSERT, self.items[i]["보관법"])
+                RenderText.insert(INSERT, "\n\n")
+                RenderText.insert(INSERT, "낱알 이미지 :  ")
+                #시발이거왜터짐?
+                #RenderText.insert(INSERT, self.items[i]["낱알 이미지"])
+                RenderText.insert(INSERT, "\n\n\n")
 
 
         RenderText.pack()
