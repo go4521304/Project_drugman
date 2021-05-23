@@ -1,10 +1,12 @@
 from tkinter import *
 from tkinter import font
+from collections import ChainMap
 import tkinter.messagebox
 from medicine_new import *
 
 class Medi:
     def __init__(self):
+        self.items = []
         self.Main()
 
     def Main(self):
@@ -12,6 +14,7 @@ class Medi:
         self.Md.title("Medicine")
         self.Md.geometry("600x800")
         self.medicine = Medicine()
+
         Base_Canvas = Canvas(self.Md,width =570,height = 85,bg="light gray",)
         Base_Canvas.place(x=10,y=10)
 
@@ -21,6 +24,7 @@ class Medi:
         self.Search_efcyQesitm()
         self.InitInputLabel()
         self.InitSearchButton()
+
         self.Md.mainloop()
 
     def Search_efcyQesitm(self):
@@ -57,15 +61,62 @@ class Medi:
     def SearchButtonAction(self):
         iSearchIndex = self.SearchListBox.curselection()[0]
         key = self.InputLabel.get()
+
         if iSearchIndex == 0:
             self.medicine.request(0,key)
-            print(len(self.medicine.medicine))
+            self.items = self.medicine.medicine
+            #print(type(self.medicine.medicine))
+            #print(self.medicine.medicine)
+            #print(self.items)
+            self.InitRenderText()
         elif iSearchIndex == 1:
             self.medicine.request(1,key)
-            print(self.medicine.medicine[9])
+            self.items = self.medicine.medicine
+            self.Render()
         elif iSearchIndex == 2:
             self.medicine.request(2,key)
-            print(self.medicine.medicine[9])
+            self.items = self.medicine.medicine
+            self.InitRenderText()
+
+    def InitRenderText(self):
+        cm = ChainMap(*self.items)
+        RenderTextScrollbar = Scrollbar(self.Md)
+        RenderTextScrollbar.pack()
+        RenderTextScrollbar.place(x=375, y=200)
+
+        TempFont = font.Font(self.Md, size=13, family='Consolas')
+        RenderText = Text(self.Md, width=80, height=50.5, relief='ridge',
+                          yscrollcommand=RenderTextScrollbar.set)
+
+        for i in range(len(self.items)):
+                RenderText.insert(INSERT, "[")
+                RenderText.insert(INSERT, i + 1)
+                RenderText.insert(INSERT, "] ")
+                RenderText.insert(INSERT, "업체명: ")
+                RenderText.insert(INSERT, cm["업체명"])
+                RenderText.insert(INSERT, "\n")
+                RenderText.insert(INSERT, "업체명: ")
+                RenderText.insert(INSERT, cm["업체명"])
+                RenderText.insert(INSERT, "\n")
+                RenderText.insert(INSERT, "업체명: ")
+                RenderText.insert(INSERT, cm["업체명"])
+                RenderText.insert(INSERT, "\n")
+                RenderText.insert(INSERT, "업체명: ")
+                RenderText.insert(INSERT, cm["업체명"])
+                RenderText.insert(INSERT, "\n")
+
+
+        RenderText.pack()
+        RenderText.place(x=15, y=115)
+        RenderTextScrollbar.config(command=RenderText.yview)
+        RenderTextScrollbar.pack(side=RIGHT, fill=BOTH)
+
+        RenderText.configure(state='disabled')
+
+    def Render(self):
+        for i in range(len(self.items)):
+            print()
+
 
 
 
