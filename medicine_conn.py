@@ -1,6 +1,8 @@
 from typing import Sized
 import urllib
 import http.client
+
+from requests.exceptions import Timeout
 conn = http.client.HTTPConnection("apis.data.go.kr")
 
 class Medicine:
@@ -22,12 +24,16 @@ class Medicine:
         find_query = self.TYPE[type] + urllib.parse.quote(option)
 
         conn.request("GET","/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList?serviceKey=" + self.SERVICE_KEY 
-        + "&pageNo=1" + find_query + "&numOfRows=10" + '&type=xml')
-        req = conn.getresponse()
-        if req.status == 200:
-            self.extractData(req.read().decode('utf-8'))
-        else:
-            print(req.status,req.reason)
+        + "&pageNo=1" + find_query + "&numOfRows=40" + '&type=xml')
+
+        try:
+            req = conn.getresponse()
+            if req.status == 200:
+                self.extractData(req.read().decode('utf-8'))
+            else:
+                print(req.status,req.reason)
+        except:
+            pass
 
     # 정보를 데이터 프레임에 집어넣음
     def extractData(self, strXml):

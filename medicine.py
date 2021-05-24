@@ -1,136 +1,184 @@
+from io import BytesIO
+from PIL import Image as P
+from PIL import ImageTk
 from tkinter import *
 from tkinter import font
+from tkinter import ttk
 from collections import ChainMap
 import tkinter.messagebox
-from medicine_new import *
+from medicine_conn import *
+import requests
 
 class Medi:
-    def __init__(self):
-        self.items = []
-        self.Main()
+    pageNum = 0
+    
+    def __init__(self) -> None:
+        window = Tk()
+        window.title('Medicine')
+        window.geometry('600x800')
+        window.config(bg='light green')
 
-    def Main(self):
-        self.Md = Tk()
-        self.Md.title("Medicine")
-        self.Md.geometry("600x800")
-        self.medicine = Medicine()
+        self.medi = Medicine()
 
-        fill_Canvas = Canvas(self.Md,width = 2000,height=2000,bg='light green')
-        fill_Canvas.place(x=-10,y=-100)
+        # 글꼴
+        fontSet = font.Font(family='Consolas', weight='normal', size=15)
 
-        Base_Canvas = Canvas(self.Md,width =570,height = 85,bg="light blue",)
-        Base_Canvas.place(x=10,y=10)
+        # 버튼용 글꼴
+        fontSet_Btn = font.Font(family='Consolas', weight='normal', size=10)
 
-        Info_Canvas = Canvas(self.Md, width=570, height=670, bg="light blue", )
-        Info_Canvas.place(x=10, y=110)
+        # 상단부 영역
+        frameTop = Frame(window,width=580,
+                                height=85,
+                                highlightthickness=3,
+                                bg='light blue',
+                                highlightbackground='white',
+                                highlightcolor='white')
+        frameTop.place(x=10, y=10)          # 좌표
 
-        self.Search_efcyQesitm()
-        self.InitInputLabel()
-        self.InitSearchButton()
+        # 하단부 영역
+        frameBottom = Frame(window, width=580,
+                                    height=680,
+                                    highlightthickness=3,
+                                    bg='light blue',
+                                    highlightbackground='white',
+                                    highlightcolor='white')
+        frameBottom.place(x=10, y=110)      # 좌표
 
-        self.Md.mainloop()
+        ###################### 상단부 영역 위젯들 ######################
+        # 검색 종류
+        self.strType = StringVar()
+        searchType = ttk.Combobox(frameTop, state='readonly',
+                                            font=fontSet,
+                                            values=["증상", "제약사", "약 이름"],
+                                            textvariable=self.strType,
+                                            width=6)
+        searchType.current(0)
+        searchType.place(x=20, y=20)        # 좌표
 
-    def Search_efcyQesitm(self):
-        self.ListBoxScrollbar = Scrollbar(self.Md)
-        self.ListBoxScrollbar.pack()
-        self.ListBoxScrollbar.place(x=150, y=30)
+        # 검색창
+        self.strSearch = StringVar()
+        searchInput = Entry(frameTop, width=22,
+                                      font=fontSet,
+                                      textvariable=self.strSearch,
+                                      borderwidth=2)
+        searchInput.bind('<Return>', self.SearchButtonAction)
+        searchInput.place(x=145, y=20)      # 좌표
 
-        TempFont = font.Font(self.Md, size=15, weight='bold', family='Consolas')
-        self.SearchListBox = Listbox(self.Md, font=TempFont, activestyle='none',
-                                width=10, height=1,
-                                yscrollcommand=self.ListBoxScrollbar.set)
-
-        self.SearchListBox.insert(0, "증상")
-        self.SearchListBox.insert(1, "제약사")
-        self.SearchListBox.insert(2, "약이름")
-
-        self.SearchListBox.pack()
-        self.SearchListBox.place(x=30, y=40)
-
-        self.ListBoxScrollbar.config(command=self.SearchListBox.yview)
-
-    def InitInputLabel(self):
-        TempFont = font.Font(self.Md, size=15, weight='bold', family = 'Consolas')
-        self.InputLabel = Entry(self.Md, font = TempFont, width = 26, relief = 'ridge')
-        self.InputLabel.pack()
-        self.InputLabel.place(x=180, y=40)
-
-    def InitSearchButton(self):
-        TempFont = font.Font(self.Md, size=12, weight='bold', family = 'Consolas')
-        self.SearchButton = Button(self.Md, font = TempFont, text="검색",  command=self.SearchButtonAction)
-        self.SearchButton.pack()
-        self.SearchButton.place(x=490, y=35)
-
-    def SearchButtonAction(self):
-        iSearchIndex = self.SearchListBox.curselection()[0]
-        key = self.InputLabel.get()
-
-        if iSearchIndex == 0:
-            self.medicine.request(0,key)
-            self.items = self.medicine.medicine
-            #print(type(self.medicine.medicine))
-            #print(self.medicine.medicine)
-            #print(self.items)
-            self.InitRenderText()
-        elif iSearchIndex == 1:
-            self.medicine.request(1,key)
-            self.items = self.medicine.medicine
-            self.Render()
-        elif iSearchIndex == 2:
-            self.medicine.request(2,key)
-            self.items = self.medicine.medicine
-            self.InitRenderText()
-
-    def InitRenderText(self):
-        RenderTextScrollbar = Scrollbar(self.Md)
-        RenderTextScrollbar.pack()
-        RenderTextScrollbar.place(x=375, y=200)
-
-        TempFont = font.Font(self.Md, size=10, family='Consolas')
-        RenderText = Text(self.Md, width=80, height=50.5, relief='ridge',font = TempFont,
-                          yscrollcommand=RenderTextScrollbar.set)
-
-        for i in range(len(self.items)):
-                RenderText.insert(INSERT, "[")
-                RenderText.insert(INSERT, i + 1)
-                RenderText.insert(INSERT, "] ")
-                RenderText.insert(INSERT, "업체명 : ")
-                RenderText.insert(INSERT, self.items[i]["업체명"])
-                RenderText.insert(INSERT, "\n\n")
-                RenderText.insert(INSERT, "제품명 : ")
-                RenderText.insert(INSERT, self.items[i]["제품명"])
-                RenderText.insert(INSERT, "\n\n")
-                RenderText.insert(INSERT, "효능 : ")
-                RenderText.insert(INSERT, self.items[i]["효능"])
-                RenderText.insert(INSERT, "\n\n")
-                RenderText.insert(INSERT, "사용법 : ")
-                RenderText.insert(INSERT, self.items[i]["사용법"])
-                RenderText.insert(INSERT, "\n\n")
-                RenderText.insert(INSERT, "주의사항 : ")
-                RenderText.insert(INSERT, self.items[i]["주의사항"])
-                RenderText.insert(INSERT, "\n\n")
-                RenderText.insert(INSERT, "보관법 : ")
-                RenderText.insert(INSERT, self.items[i]["보관법"])
-                RenderText.insert(INSERT, "\n\n")
-                RenderText.insert(INSERT, "낱알 이미지 :  ")
-                #시발이거왜터짐?
-                #RenderText.insert(INSERT, self.items[i]["낱알 이미지"])
-                RenderText.insert(INSERT, "\n\n\n")
+        # 검색 버튼
+        searchButton = Button(frameTop, font=fontSet_Btn,
+                                        text="검색",
+                                        command=self.SearchButtonAction,
+                                        width=7)
+        searchButton.place(x=485, y=20)     # 좌표
 
 
-        RenderText.pack()
-        RenderText.place(x=15, y=115)
-        RenderTextScrollbar.config(command=RenderText.yview)
-        RenderTextScrollbar.pack(side=RIGHT, fill=BOTH)
+        ###################### 하단부 영역 위젯들 ######################
+        # 목록 리스트
+        self.listBtn = []
+        for i in range(8):
+            self.listBtn.append(Button(frameBottom, font=fontSet_Btn, text='', relief=FLAT, height=3, width=62, state=DISABLED,
+                                                    bg='light blue', activebackground='light blue', disabledforeground='black', wraplength=560))
+            self.listBtn[-1].place(x=3, y=80*i) # 좌표
+        
+        self.listBtn[0]['command'] = lambda: self.ShowDetail(0)
+        self.listBtn[1]['command'] = lambda: self.ShowDetail(1)
+        self.listBtn[2]['command'] = lambda: self.ShowDetail(2)
+        self.listBtn[3]['command'] = lambda: self.ShowDetail(3)
+        self.listBtn[4]['command'] = lambda: self.ShowDetail(4)
+        self.listBtn[5]['command'] = lambda: self.ShowDetail(5)
+        self.listBtn[6]['command'] = lambda: self.ShowDetail(6)
+        self.listBtn[7]['command'] = lambda: self.ShowDetail(7)
 
-        RenderText.configure(state='disabled')
 
-    def Render(self):
-        for i in range(len(self.items)):
-            print()
+        # 이전 버튼
+        self.prevBtn = Button(frameBottom,  font=fontSet_Btn, text='이전', relief=FLAT, state=DISABLED, command=lambda: self.ShowList(-1),
+                                            bg='light blue', activebackground='light green')
+        
+        # 다음버튼
+        self.nextBtn = Button(frameBottom,  font=fontSet_Btn, text='다음', relief=FLAT, state=DISABLED, command=lambda: self.ShowList(+1),
+                                            bg='light blue', activebackground='light green')
+
+        self.prevBtn.place(x=0, y=637)      # 좌표
+        self.nextBtn.place(x=525, y=637)    # 좌표
+
+        window.mainloop()
 
 
+    def SearchButtonAction(self, event = None):
+        t = self.strType.get()
+        type = 0
+        if t == '증상':
+            type = 0
+        elif t == '제약사':
+            type = 1
+        else:
+            type = 2
+        self.medi.request(type, self.strSearch.get())
 
+        self.pageNum = 0
+        self.ShowList(0)
 
+    def ShowList(self, option = 0):
+        self.pageNum += option
+        if self.pageNum == 0:
+            self.nextBtn['state'] = NORMAL
+            self.prevBtn['state'] = DISABLED
+        elif self.pageNum == 4:
+            self.nextBtn['state'] = DISABLED
+            self.prevBtn['state'] = NORMAL 
+        else:
+            self.nextBtn['state'] = NORMAL
+            self.prevBtn['state'] = NORMAL        
 
-Medi()
+        for i in range(8):
+                self.listBtn[i]['state'] = DISABLED
+                self.listBtn[i]['text'] = ''
+
+        if len(self.medi.medicine) == 0:
+            self.nextBtn['state'] = DISABLED
+            self.prevBtn['state'] = DISABLED
+            self.listBtn[3]['text'] = '검색 결과가 없습니다.'
+
+        else:
+            for i in range(8):
+                if i+(self.pageNum*8) == len(self.medi.medicine):
+                    break
+                
+                self.listBtn[i]['state'] = NORMAL
+                self.listBtn[i]['text'] = self.medi.medicine[i+(self.pageNum*8)]['제품명'] + " / " + self.medi.medicine[i+(self.pageNum*8)]['업체명']
+
+    def ShowDetail(self, index):
+        detail = Toplevel()
+        detail.resizable(0, 0)
+        detail.title('자세히 보기')
+
+        RenderTextScrollbar = Scrollbar(detail)
+
+        TempFont = font.Font(detail, size=10, family='Malgun Gothic')
+        RenderText = Text(detail, font = TempFont, yscrollcommand=RenderTextScrollbar.set)
+        for i in self.medi.COLUMNS:
+            if i != '낱알 이미지':
+                RenderText.insert(INSERT, "[" + i + "]\n")
+                RenderText.insert(INSERT, str(self.medi.medicine[index+(self.pageNum*8)][i]) + "\n\n")
+            else:
+                try:
+                    res = requests.get(str(self.medi.medicine[index+(self.pageNum*8)][i]))
+                    img = P.open(BytesIO(res.content))
+                    img1_size = img.size
+                    img = img.resize((400, int(img1_size[1]*(400/img1_size[0]))), P.ANTIALIAS)
+                    resized_image = ImageTk.PhotoImage(image=img)
+                    label = Label(detail, image = resized_image)
+                    label.image = resized_image
+                    label.pack(side='bottom')
+                    
+                    # img.show() 그냥 기본 프로그램으로 열기
+
+                except:
+                    label = None
+                
+                
+        RenderText.pack(side='left')
+        RenderTextScrollbar.pack(side='right', fill='y')
+        
+
+test = Medi()
