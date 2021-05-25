@@ -10,8 +10,10 @@ class MAP:
 
     def Main(self):
         self.window = Tk()
-        canvas = Canvas()
-        canvas.
+        self.window.title('Medicine')
+        self.window.geometry('870x900')
+        self.window.config(bg='light gray')
+
         Button(self.window, text='folium 지도', command=self.Pressed).pack()
         self.window.mainloop()
 
