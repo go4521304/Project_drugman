@@ -24,7 +24,7 @@ class Medi:
         fontSet = font.Font(family='Consolas', weight='normal', size=15)
 
         # 버튼용 글꼴
-        fontSet_Btn = font.Font(family='Consolas', weight='normal', size=10)
+        fontSet_Btn = font.Font(family='Consolas', weight='normal', size=12)
 
         # 상단부 영역
         frameTop = Frame(window,width=580,
@@ -51,25 +51,25 @@ class Medi:
                                             font=fontSet,
                                             values=["증상", "제약사", "약 이름"],
                                             textvariable=self.strType,
-                                            width=6)
+                                            width=7)
         searchType.current(0)
-        searchType.place(x=20, y=20)        # 좌표
+        searchType.place(x=20, y=25)        # 좌표
 
         # 검색창
         self.strSearch = StringVar()
-        searchInput = Entry(frameTop, width=22,
+        searchInput = Entry(frameTop, width=30,
                                       font=fontSet,
                                       textvariable=self.strSearch,
                                       borderwidth=2)
         searchInput.bind('<Return>', self.SearchButtonAction)
-        searchInput.place(x=145, y=20)      # 좌표
+        searchInput.place(x=135, y=25)      # 좌표
 
         # 검색 버튼
         searchButton = Button(frameTop, font=fontSet_Btn,
                                         text="검색",
                                         command=self.SearchButtonAction,
                                         width=7)
-        searchButton.place(x=485, y=20)     # 좌표
+        searchButton.place(x=485, y=23)     # 좌표
 
 
         ###################### 하단부 영역 위젯들 ######################
@@ -98,8 +98,8 @@ class Medi:
         self.nextBtn = Button(frameBottom,  font=fontSet_Btn, text='다음', relief=FLAT, state=DISABLED, command=lambda: self.ShowList(+1),
                                             bg='light blue', activebackground='light green')
 
-        self.prevBtn.place(x=0, y=637)      # 좌표
-        self.nextBtn.place(x=525, y=637)    # 좌표
+        self.prevBtn.place(x=3, y=640)      # 좌표
+        self.nextBtn.place(x=525, y=640)    # 좌표
 
         window.mainloop()
 
