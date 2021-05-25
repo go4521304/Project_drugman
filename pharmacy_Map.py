@@ -2,6 +2,7 @@ from tkinter import *
 import folium
 import webbrowser
 from pharmacy import *
+
 def Pressed():
     # 위도 경도 지정
     print(pharmacy.pharmacy[1])
