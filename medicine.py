@@ -79,8 +79,8 @@ class Medi:
         # 목록 리스트
         self.listBtn = []
         for i in range(8):
-            self.listBtn.append(Button(frameBottom, font=fontSet_Btn, text='', relief=FLAT, height=72, width=850, state=DISABLED, image=pixelVirtual, compound=LEFT,
-                                                    bg='light blue', activebackground='light blue', disabledforeground='black', wraplength=560))
+            self.listBtn.append(Button(frameBottom, font=fontSet_Btn, text='', relief=RAISED, height=72, width=835, state=DISABLED, image=pixelVirtual, compound=LEFT,
+                                                    bg='light blue', activebackground='light blue', disabledforeground='black', wraplength=600))
             self.listBtn[-1].place(x=1, y=80*i) # 좌표
         
         self.listBtn[0]['command'] = lambda: self.ShowDetail(0)
@@ -149,6 +149,7 @@ class Medi:
                 
                 self.listBtn[i]['state'] = NORMAL
                 self.listBtn[i]['text'] = self.medi.medicine[i+(self.pageNum*8)]['제품명'] + " / " + self.medi.medicine[i+(self.pageNum*8)]['업체명']
+
 
     def ShowDetail(self, index):
         detail = Toplevel()
