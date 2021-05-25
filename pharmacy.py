@@ -15,6 +15,7 @@ class Pharmacy:
 
     def request(self, add1 = "경기도", add2="시흥시"):
         # 데이터프레임 생성
+
         self.pharmacy = pd.DataFrame(columns=['주소', '약국 이름', '전화번호', 'ID', 'LON', 'LAT'])
         self.index = 0
 
@@ -54,5 +55,5 @@ class Pharmacy:
 # 나중에 임포트 할 때 지우기!!
 test = Pharmacy()
 test.request()
-print(test.pharmacy)
-print(len(test.pharmacy.index))
+#print(test.pharmacy)
+#print(len(test.pharmacy.index))
