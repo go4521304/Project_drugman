@@ -26,6 +26,9 @@ class Medi:
         # 버튼용 글꼴
         fontSet_Btn = font.Font(family='Consolas', weight='normal', size=12)
 
+        # 가상이미지
+        pixelVirtual = PhotoImage(width=1, height=1)
+
         # 상단부 영역
         frameTop = Frame(window,width=580,
                                 height=85,
@@ -76,9 +79,9 @@ class Medi:
         # 목록 리스트
         self.listBtn = []
         for i in range(8):
-            self.listBtn.append(Button(frameBottom, font=fontSet_Btn, text='', relief=FLAT, height=3, width=62, state=DISABLED,
+            self.listBtn.append(Button(frameBottom, font=fontSet_Btn, text='', relief=FLAT, height=72, width=566, state=DISABLED, image=pixelVirtual, compound=LEFT,
                                                     bg='light blue', activebackground='light blue', disabledforeground='black', wraplength=560))
-            self.listBtn[-1].place(x=3, y=80*i) # 좌표
+            self.listBtn[-1].place(x=1, y=80*i) # 좌표
         
         self.listBtn[0]['command'] = lambda: self.ShowDetail(0)
         self.listBtn[1]['command'] = lambda: self.ShowDetail(1)
@@ -170,8 +173,6 @@ class Medi:
                     label = Label(detail, image = resized_image)
                     label.image = resized_image
                     label.pack(side='bottom')
-                    
-                    # img.show() 그냥 기본 프로그램으로 열기
 
                 except:
                     label = None
