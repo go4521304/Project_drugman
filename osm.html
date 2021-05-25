@@ -23,7 +23,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_64da41490b754303b05398fb169cce78 {
+                #map_669d6a18a48b43a986dd94c29fc679f0 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -35,15 +35,15 @@
 </head>
 <body>    
     
-            <div class="folium-map" id="map_64da41490b754303b05398fb169cce78" ></div>
+            <div class="folium-map" id="map_669d6a18a48b43a986dd94c29fc679f0" ></div>
         
 </body>
 <script>    
     
-            var map_64da41490b754303b05398fb169cce78 = L.map(
-                "map_64da41490b754303b05398fb169cce78",
+            var map_669d6a18a48b43a986dd94c29fc679f0 = L.map(
+                "map_669d6a18a48b43a986dd94c29fc679f0",
                 {
-                    center: [37.3402849, 126.7313189],
+                    center: [126.7429140006, 37.3511922085],
                     crs: L.CRS.EPSG3857,
                     zoom: 13,
                     zoomControl: true,
@@ -55,9 +55,28 @@
 
         
     
-            var tile_layer_f4e032ec6790418daaa1d61a013fc3f1 = L.tileLayer(
+            var tile_layer_84423be4a9a2480fb8c6120379adbe81 = L.tileLayer(
                 "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_64da41490b754303b05398fb169cce78);
+            ).addTo(map_669d6a18a48b43a986dd94c29fc679f0);
         
+    
+            var marker_93f5f91f454247a591012f40681d69e4 = L.marker(
+                [126.7429140006, 37.3511922085],
+                {}
+            ).addTo(map_669d6a18a48b43a986dd94c29fc679f0);
+        
+    
+        var popup_a905834b99de4fe6aa282f2a8cec1838 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_efee54251cd24c348aa76842f764978d = $(`<div id="html_efee54251cd24c348aa76842f764978d" style="width: 100.0%; height: 100.0%;">한국산업기술대</div>`)[0];
+            popup_a905834b99de4fe6aa282f2a8cec1838.setContent(html_efee54251cd24c348aa76842f764978d);
+        
+
+        marker_93f5f91f454247a591012f40681d69e4.bindPopup(popup_a905834b99de4fe6aa282f2a8cec1838)
+        ;
+
+        
+    
 </script>

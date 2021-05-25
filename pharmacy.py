@@ -53,7 +53,7 @@ class Pharmacy:
         
 
 # 나중에 임포트 할 때 지우기!!
-test = Pharmacy()
-test.request()
+#test = Pharmacy()
+#test.request()
 #print(test.pharmacy)
 #print(len(test.pharmacy.index))
