@@ -12,10 +12,10 @@ import requests
 class Medi:
     pageNum = 0
     
-    def __init__(self) -> None:
-        window = Tk()
-        window.title('Medicine')
-        window.geometry('870x900')
+    def __init__(self, window) -> None:
+        # window = Tk()
+        # window.title('Medicine')
+        # window.geometry('870x900')
         window.config(bg='light green')
 
         self.medi = Medicine()
@@ -79,7 +79,7 @@ class Medi:
         # 목록 리스트
         self.listBtn = []
         for i in range(8):
-            self.listBtn.append(Button(frameBottom, font=fontSet_Btn, text='', relief=RAISED, height=72, width=835, state=DISABLED, image=pixelVirtual, compound=LEFT,
+            self.listBtn.append(Button(frameBottom, font=fontSet_Btn, text='', relief=FLAT, height=72, width=835, state=DISABLED, image=pixelVirtual, compound=LEFT,
                                                     bg='light blue', activebackground='light blue', disabledforeground='black', wraplength=600))
             self.listBtn[-1].place(x=1, y=80*i) # 좌표
         
@@ -144,11 +144,17 @@ class Medi:
 
         else:
             for i in range(8):
-                if i+(self.pageNum*8) == len(self.medi.medicine):
+                if i+(self.pageNum*8) >= len(self.medi.medicine):
+                    self.nextBtn['state'] = DISABLED
                     break
+
                 
                 self.listBtn[i]['state'] = NORMAL
                 self.listBtn[i]['text'] = self.medi.medicine[i+(self.pageNum*8)]['제품명'] + " / " + self.medi.medicine[i+(self.pageNum*8)]['업체명']
+            
+            if (i+1)+(self.pageNum*8) >= len(self.medi.medicine):
+                self.nextBtn['state'] = DISABLED
+
 
 
     def ShowDetail(self, index):
@@ -181,6 +187,3 @@ class Medi:
                 
         RenderText.pack(side='left')
         RenderTextScrollbar.pack(side='right', fill='y')
-        
-
-test = Medi()
