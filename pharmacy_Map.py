@@ -1,38 +1,33 @@
-from tkinter import *
-import folium
-import webbrowser
-import pharmacy as ph
+import tkinter as tk
+from tkinter import messagebox
+from cefpython3 import cefpython as cef
+import threading
+import sys
 
+def test_thread(frame):
+    sys.excepthook = cef.ExceptHook
+    window_info = cef.WindowInfo(frame.winfo_id())
+    window_info.SetAsChild(frame.winfo_id(), rect)
+    cef.Initialize()
+    browser = cef.CreateBrowserSync(window_info, url='file:///osm.html')
+    cef.MessageLoop()
 
-class MAP:
-    def __init__(self):
-        self.Main()
+def on_closing():
+    print('closing')
+    root.destroy()
 
-    def Main(self):
-        self.window = Tk()
-        self.window.title('Medicine')
-        self.window.geometry('870x900')
-        self.window.config(bg='light gray')
-
-        Button(self.window, text='folium 지도', command=self.Pressed).pack()
-        self.window.mainloop()
-
-    def Pressed(self):
-        # 위도 경도 지정
-        test = ph.Pharmacy()
-        test.request()
-
-        print(test.pharmacy['LON'][1])
-        print(test.pharmacy['LAT'][1])
-        map_osm = folium.Map(location=[test.pharmacy['LON'][1], test.pharmacy['LAT'][1]], zoom_start=13)
-        # 마커 지정
-        folium.Marker([test.pharmacy['LON'][1], test.pharmacy['LAT'][1]],
-                      popup='한국산업기술대').add_to(map_osm)
-        # html 파일로 저장
-        map_osm.save('osm.html')
-        webbrowser.open_new('osm.html')
-
-        #print(test.pharmacy['주소'][1])
-
-MAP()
-
+root = tk.Tk()
+root.geometry('800x600')
+root.protocol('WM_DELETE_WINDOW', on_closing)
+frame = tk.Frame(root, bg='blue', height=200)
+frame2 = tk.Frame(root, bg='white', height=200)
+frame.pack(side='top', fill='x')
+frame2.pack(side='top', fill='x')
+tk.Button(frame2, text='Exit', command=on_closing).pack(side='left')
+tk.Button(frame2, text='Show something',
+          command=lambda: messagebox.showinfo('TITLE', 'Shown something')).pack(side='right')
+rect = [0, 0, 800, 200]
+print('browser: ', rect[2], 'x', rect[3])
+thread = threading.Thread(target=test_thread, args=(frame,))
+thread.start()
+root.mainloop()
