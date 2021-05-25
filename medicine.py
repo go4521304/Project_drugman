@@ -15,7 +15,7 @@ class Medi:
     def __init__(self) -> None:
         window = Tk()
         window.title('Medicine')
-        window.geometry('600x800')
+        window.geometry('870x900')
         window.config(bg='light green')
 
         self.medi = Medicine()
@@ -30,7 +30,7 @@ class Medi:
         pixelVirtual = PhotoImage(width=1, height=1)
 
         # 상단부 영역
-        frameTop = Frame(window,width=580,
+        frameTop = Frame(window,width=850,
                                 height=85,
                                 highlightthickness=3,
                                 bg='light blue',
@@ -39,8 +39,8 @@ class Medi:
         frameTop.place(x=10, y=10)          # 좌표
 
         # 하단부 영역
-        frameBottom = Frame(window, width=580,
-                                    height=680,
+        frameBottom = Frame(window, width=850,
+                                    height=780,
                                     highlightthickness=3,
                                     bg='light blue',
                                     highlightbackground='white',
@@ -60,7 +60,7 @@ class Medi:
 
         # 검색창
         self.strSearch = StringVar()
-        searchInput = Entry(frameTop, width=30,
+        searchInput = Entry(frameTop, width=53,
                                       font=fontSet,
                                       textvariable=self.strSearch,
                                       borderwidth=2)
@@ -72,14 +72,14 @@ class Medi:
                                         text="검색",
                                         command=self.SearchButtonAction,
                                         width=7)
-        searchButton.place(x=485, y=23)     # 좌표
+        searchButton.place(x=745, y=23)     # 좌표
 
 
         ###################### 하단부 영역 위젯들 ######################
         # 목록 리스트
         self.listBtn = []
         for i in range(8):
-            self.listBtn.append(Button(frameBottom, font=fontSet_Btn, text='', relief=FLAT, height=72, width=566, state=DISABLED, image=pixelVirtual, compound=LEFT,
+            self.listBtn.append(Button(frameBottom, font=fontSet_Btn, text='', relief=FLAT, height=72, width=850, state=DISABLED, image=pixelVirtual, compound=LEFT,
                                                     bg='light blue', activebackground='light blue', disabledforeground='black', wraplength=560))
             self.listBtn[-1].place(x=1, y=80*i) # 좌표
         
@@ -101,8 +101,8 @@ class Medi:
         self.nextBtn = Button(frameBottom,  font=fontSet_Btn, text='다음', relief=FLAT, state=DISABLED, command=lambda: self.ShowList(+1),
                                             bg='light blue', activebackground='light green')
 
-        self.prevBtn.place(x=3, y=640)      # 좌표
-        self.nextBtn.place(x=525, y=640)    # 좌표
+        self.prevBtn.place(x=3, y=740)      # 좌표
+        self.nextBtn.place(x=790, y=740)    # 좌표
 
         window.mainloop()
 
