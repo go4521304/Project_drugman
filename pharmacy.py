@@ -1,4 +1,5 @@
 from tkinter import *
+from branca.element import IFrame
 from cefpython3 import cefpython as cef
 from tkinter import *
 from tkinter import font
@@ -6,6 +7,7 @@ from tkinter import ttk
 import threading
 import sys
 import folium
+import json
 from pharmacy_conn import *
 
 class Pharm:
@@ -52,13 +54,33 @@ class Pharm:
         thread.start()
 
         ###################### 하단부 영역 위젯들 ######################
+        with open("./resource/address_list.json", encoding='UTF-8') as f:
+            self.address_data = json.load(f)
+        # 주소1
+        self.strAdd1 = StringVar()
+        searchAdd1 = ttk.Combobox(frameBottom, state='readonly',
+                                            font=fontSet,
+                                            values=list(self.address_data.keys()),
+                                            textvariable=self.strAdd1,
+                                            width=15)
+        searchAdd1.bind("<<ComboboxSelected>>", self.selAdd1)
+        searchAdd1.set("시/도")
+        searchAdd1.place(x=160, y=20)        # 좌표
+
+        self.strAdd2 = StringVar()
+        self.searchAdd2 = ttk.Combobox(frameBottom, state='readonly',
+                                            font=fontSet,
+                                            textvariable=self.strAdd2,
+                                            width=18)
+        self.searchAdd2.set("시/군/구")
+        self.searchAdd2.place(x=360, y=20)        # 좌표
+
         # 검색버튼
         searchButton = Button(frameBottom, font=fontSet_Btn,
                                         text="검색",
                                         command=self.SearchButtonAction,
                                         width=7)
-        searchButton.place(x=745, y=18)     # 좌표    
-        # window.mainloop()
+        searchButton.place(x=610, y=18)     # 좌표    
     
     def showMap(self, frame):
         sys.excepthook = cef.ExceptHook
@@ -70,14 +92,22 @@ class Pharm:
 
     def SearchButtonAction(self):
         self.mapSave()
-        self.browser.Reload()
-        
+        self.browser.LoadUrl('file:///map.html')
+        # self.browser.LoadUrl('https://www.youtube.com')
+
 
     def mapSave(self):
         m = folium.Map(location=[37.3402849,126.7313189], zoom_start=12)
+        # 여기 수정해야함
         self.pharm.request()
 
         for i, row in self.pharm.pharmacy.iterrows():
-            folium.Marker(location=[row['LAT'], row['LON']], tooltip=row['약국 이름']).add_to(m)
+            html = row['약국 이름'] + """<br><br>""" + """전화번호<br>""" + row['전화번호'] + """<br><br>""" + """주소<br>""" + row['주소'] 
+            iframe = folium.IFrame(html=html, width=200, height=200)
+            folium.Marker(location=[row['LAT'], row['LON']], tooltip=row['약국 이름'], popup=folium.Popup(iframe)).add_to(m)
 
         m.save('map.html')
+
+    def selAdd1(self, event):
+        self.searchAdd2.set("시/군/구")
+        self.searchAdd2['value'] = self.address_data[self.strAdd1.get()]

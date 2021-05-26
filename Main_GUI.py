@@ -40,6 +40,7 @@ class Main_GUI:
 
         self.canvas_B = Canvas(frameB, width=330, height=900)
         self.canvas_B.place(x=0, y=0)
+        
         self.canvas_C = Canvas(self.frameS,bg='gray', width=870, height=920)
         self.canvas_C.place(x=0, y=-10)
         self.canvas_B.create_rectangle(10,10,320,890,width=7,outline='light blue')

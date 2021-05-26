@@ -27,7 +27,7 @@ class Medi:
         fontSet_Btn = font.Font(family='Consolas', weight='normal', size=12)
 
         # 가상이미지
-        pixelVirtual = PhotoImage(width=1, height=1)
+        self.pixelVirtual = PhotoImage(width=1, height=1)
 
         # 상단부 영역
         frameTop = Frame(window,width=850,
@@ -55,7 +55,7 @@ class Medi:
                                             values=["증상", "제약사", "약 이름"],
                                             textvariable=self.strType,
                                             width=7)
-        searchType.current(0)
+        searchType.set("선택")
         searchType.place(x=20, y=25)        # 좌표
 
         # 검색창
@@ -79,7 +79,7 @@ class Medi:
         # 목록 리스트
         self.listBtn = []
         for i in range(8):
-            self.listBtn.append(Button(frameBottom, font=fontSet_Btn, text='', relief=FLAT, height=72, width=835, state=DISABLED, image=pixelVirtual, compound=LEFT,
+            self.listBtn.append(Button(frameBottom, font=fontSet_Btn, text='', relief=FLAT, height=72, width=835, state=DISABLED, image=self.pixelVirtual, compound=LEFT,
                                                     bg='light blue', activebackground='light blue', disabledforeground='black', wraplength=600))
             self.listBtn[-1].place(x=1, y=80*i) # 좌표
         
@@ -103,8 +103,6 @@ class Medi:
 
         self.prevBtn.place(x=3, y=740)      # 좌표
         self.nextBtn.place(x=790, y=740)    # 좌표
-
-        # window.mainloop()
 
 
     def SearchButtonAction(self, event = None):
