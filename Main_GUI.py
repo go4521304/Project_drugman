@@ -48,7 +48,7 @@ class Main_GUI:
         image['medicine'] = PhotoImage(file='./resource/medicine.png')
         image['pharmacy'] = PhotoImage(file='./resource/pharmacy.png')
         self.Pharmachy = Button(frameB, text='약', image=image['medicine'], command=self.Draw_M,relief='flat')
-        self.Medicine = Button(frameB, text='국', image=image['pharmacy'], command=self.Draw_P)
+        self.Medicine = Button(frameB, text='국', image=image['pharmacy'], command=self.Draw_P,relief='flat')
 
         # 디버그용 그리드
         #for i in range(4):
@@ -61,8 +61,8 @@ class Main_GUI:
         #        self.canvas_C.create_line(0,100*j,870,100*j,fill = "red")
 
 
-        self.Pharmachy.place(x=60,y=250)
-        self.Medicine.place(x=60,y=550)
+        self.Pharmachy.place(x=35,y=250)
+        self.Medicine.place(x=35,y=550)
         #1
         self.window.mainloop()
 
