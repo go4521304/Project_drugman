@@ -47,7 +47,7 @@ class Main_GUI:
 
         image['medicine'] = PhotoImage(file='./resource/medicine.png')
         image['pharmacy'] = PhotoImage(file='./resource/pharmacy.png')
-        self.Pharmachy = Button(frameB, text='약', image=image['medicine'], command=self.Draw_M)
+        self.Pharmachy = Button(frameB, text='약', image=image['medicine'], command=self.Draw_M,relief='flat')
         self.Medicine = Button(frameB, text='국', image=image['pharmacy'], command=self.Draw_P)
 
         # 디버그용 그리드
