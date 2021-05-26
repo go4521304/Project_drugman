@@ -31,7 +31,6 @@ class Main_GUI:
         self.frameC = Frame(self.window, bg='white', width=870, height=900)
         self.frameC.grid(row=0, column=1)
 
-
         # 캔버스 생성
         self.canvas_B = Canvas(frameB, width=330, height=900)
         self.canvas_B.place(x=0, y=0)
@@ -47,14 +46,14 @@ class Main_GUI:
         self.Medicine = Button(frameB, text='국', image=image['pharmacy'], command=self.Draw_P)
 
         # 디버그용 그리드
-        for i in range(4):
-            for j in range(9):
-                self.canvas_B.create_line(100*i,0,100*i,900,fill = "gray")
-                self.canvas_B.create_line(0,100*j,330,100*j,fill = "yellow")
-        for i in range(9):
-            for j in range(9):
-                self.canvas_C.create_line(100*i,0,100*i,900,fill = "gray")
-                self.canvas_C.create_line(0,100*j,870,100*j,fill = "red")
+        #for i in range(4):
+        #    for j in range(9):
+        #        self.canvas_B.create_line(100*i,0,100*i,900,fill = "gray")
+        #        self.canvas_B.create_line(0,100*j,330,100*j,fill = "yellow")
+        #for i in range(9):
+        #    for j in range(9):
+        #        self.canvas_C.create_line(100*i,0,100*i,900,fill = "gray")
+        #        self.canvas_C.create_line(0,100*j,870,100*j,fill = "red")
 
 
         self.Pharmachy.place(x=60,y=250)

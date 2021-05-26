@@ -16,7 +16,7 @@ class Medi:
         # window = Tk()
         # window.title('Medicine')
         # window.geometry('870x900')
-        window.config(bg='light green')
+        window.config(bg='light gray')
 
         self.medi = Medicine()
 
