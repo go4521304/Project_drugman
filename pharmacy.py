@@ -9,10 +9,10 @@ import folium
 from pharmacy_conn import *
 
 class Pharm:
-    def __init__(self) -> None:
-        window = Tk()
-        window.title('pharmacy')
-        window.geometry('870x900')
+    def __init__(self, window):
+        # window = Tk()
+        # window.title('pharmacy')
+        # window.geometry('870x900')
         window.config(bg='light gray')
 
         self.pharm = Pharmacy()
@@ -26,14 +26,14 @@ class Pharm:
         m.save('map.html')
 
         # 상단부 영역
-        frameTop = Frame(window,width=850,
+        self.frameTop = Frame(window,width=850,
                                 height=800,
                                 highlightthickness=3,
                                 bg='light blue',
                                 highlightbackground='white',
                                 highlightcolor='white')
 
-        frameTop.place(x=10, y=10)  
+        self.frameTop.place(x=10, y=10)  
 
         # 하단부 영역
         frameBottom = Frame(window, width=850,
@@ -47,10 +47,9 @@ class Pharm:
 
         ###################### 상단부 영역 위젯들 ######################
         # 지도
-        thread = threading.Thread(target=self.showMap, args=(frameTop,))
+        thread = threading.Thread(target=self.showMap, args=(self.frameTop,))
         thread.daemon = True
         thread.start()
-
 
         ###################### 하단부 영역 위젯들 ######################
         # 검색버튼
@@ -59,7 +58,7 @@ class Pharm:
                                         command=self.SearchButtonAction,
                                         width=7)
         searchButton.place(x=745, y=18)     # 좌표    
-        window.mainloop()
+        # window.mainloop()
     
     def showMap(self, frame):
         sys.excepthook = cef.ExceptHook
@@ -82,5 +81,3 @@ class Pharm:
             folium.Marker(location=[row['LAT'], row['LON']], tooltip=row['약국 이름']).add_to(m)
 
         m.save('map.html')
-
-test = Pharm()

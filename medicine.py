@@ -12,7 +12,7 @@ import requests
 class Medi:
     pageNum = 0
     
-    def __init__(self, window) -> None:
+    def __init__(self, window):
         # window = Tk()
         # window.title('Medicine')
         # window.geometry('870x900')
@@ -104,7 +104,7 @@ class Medi:
         self.prevBtn.place(x=3, y=740)      # 좌표
         self.nextBtn.place(x=790, y=740)    # 좌표
 
-        window.mainloop()
+        # window.mainloop()
 
 
     def SearchButtonAction(self, event = None):
