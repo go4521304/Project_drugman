@@ -12,7 +12,7 @@ class Pharmacy:
     def __init__(self):
         pass
 
-    def request(self, add1 = "경기도", add2="시흥시"):
+    def request(self, add1 = "경기도", add2="안양시"):
         # 데이터프레임 생성
 
         self.pharmacy = pd.DataFrame(columns=['주소', '약국 이름', '전화번호', 'ID', 'LON', 'LAT'])
@@ -21,7 +21,7 @@ class Pharmacy:
         Q1 = urllib.parse.quote(add2)  # 주소 (시군구)
 
         conn.request("GET","/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire?serviceKey=" + self.SERVICE_KEY 
-        + "&Q0=" + Q0 + "&Q1=" + Q1 + "&ORD=NAME" + "&pageNo=1" + "&numOfRows=100")
+        + "&Q0=" + Q0 + "&Q1=" + Q1 + "&ORD=NAME" + "&pageNo=1" + "&numOfRows=1000")
         req = conn.getresponse()
         if req.status == 200:
             self.extractData(req.read().decode('utf-8'))
@@ -43,14 +43,15 @@ class Pharmacy:
         if resultCode.text == '00':
             item = tree.iter('item')
             for i in item:
-                self.pharmacy.loc[len(self.pharmacy)] = [i.find('dutyAddr').text, i.find('dutyName').text, 
-                i.find('dutyTel1').text, i.find('hpid').text, i.find('wgs84Lon').text, i.find('wgs84Lat').text]
+                lon = -1.0
+                lat = -1.0
+                if i.find('wgs84Lon') != None:
+                    lon = float(i.find('wgs84Lon').text)
+                if i.find('wgs84Lat') != None:
+                    lat = float(i.find('wgs84Lat').text)
+
+                if lon != -1 and lat != -1:
+                    self.pharmacy.loc[len(self.pharmacy)] = [i.find('dutyAddr').text, i.find('dutyName').text, 
+                    i.find('dutyTel1').text, i.find('hpid').text, lon, lat]
         else:
             print('Load Fail / Code : ' + resultCode.text)
-        
-
-# 나중에 임포트 할 때 지우기!!
-# test = Pharmacy()
-# test.request()
-# print(test.pharmacy)
-# print(len(test.pharmacy.index))

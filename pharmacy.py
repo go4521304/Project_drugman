@@ -97,14 +97,19 @@ class Pharm:
 
 
     def mapSave(self):
-        m = folium.Map(location=[37.3402849,126.7313189], zoom_start=12)
-        # 여기 수정해야함
-        self.pharm.request()
+        if self.strAdd1.get() == "시/도" or self.strAdd2.get() == "시/군/구":
+            return
 
+        self.pharm.request(self.strAdd1.get(), self.strAdd2.get())
+
+        tmp = self.pharm.pharmacy.mean()
+
+        m = folium.Map(location=[tmp['LAT'],tmp['LON']], zoom_start=13)
         for i, row in self.pharm.pharmacy.iterrows():
             html = row['약국 이름'] + """<br><br>""" + """전화번호<br>""" + row['전화번호'] + """<br><br>""" + """주소<br>""" + row['주소'] 
             iframe = folium.IFrame(html=html, width=200, height=200)
-            folium.Marker(location=[row['LAT'], row['LON']], tooltip=row['약국 이름'], popup=folium.Popup(iframe)).add_to(m)
+            if row['LAT'] != -1.0 and row['LON'] != -1.0:
+                folium.Marker(location=[row['LAT'], row['LON']], tooltip=row['약국 이름'], popup=folium.Popup(iframe)).add_to(m)
 
         m.save('map.html')
 
