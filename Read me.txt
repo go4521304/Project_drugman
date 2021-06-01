@@ -1,2 +1,5 @@
 2021년 1학기 스크립트언어
 팀 -약 좀 주세요-
+
+https://stackoverflow.com/questions/60121824/how-do-i-get-location-in-telegram-telepot
+텔레그램 사용할 예제 코드
