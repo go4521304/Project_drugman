@@ -92,7 +92,9 @@ class Pharm:
         c.place(x=0,y=500)
 
         Key = self.strAdd1.get()
-        Data = self.pharm.request(self.strAdd1.get(), self.strAdd2.get())
+        lst_city = self.address_data[self.strAdd1.get()]
+        self.pharm.request_num(Key, lst_city)
+        Data = self.pharm.num_of_pharm
         print(Key)
         print(Data)
         print(self.searchAdd2.get())

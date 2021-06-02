@@ -9,8 +9,30 @@ class Pharmacy:
 
     pharmacy = None
 
+    num_of_pharm = None
+
     def __init__(self):
         pass
+    
+    def request_num(self, add1 = "제주특별자치도", num_list=["제주시", "서귀포시"]):
+        self.num_of_pharm = {}
+        Q0 = urllib.parse.quote(add1)  # 주소 (시도)
+
+        for add2 in num_list:
+            Q1 = urllib.parse.quote(add2)  # 주소 (시군구)
+
+            conn.request("GET","/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire?serviceKey=" + self.SERVICE_KEY 
+            + "&Q0=" + Q0 + "&Q1=" + Q1 + "&ORD=NAME" + "&pageNo=0" + "&numOfRows=0")
+            req = conn.getresponse()
+            if req.status == 200:
+                from xml.etree import ElementTree
+                tree = ElementTree.fromstring(req.read().decode('utf-8'))
+                resultCode = tree.find('header').find('resultCode')
+                if resultCode.text == '00':
+                    self.num_of_pharm[add2] = int(tree.find('body').find('totalCount').text)
+            else:
+                print(req.status,req.reason)
+
 
     def request(self, add1 = "경기도", add2="안양시"):
         # 데이터프레임 생성
