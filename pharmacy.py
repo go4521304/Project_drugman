@@ -85,24 +85,28 @@ class Pharm:
 
     def Graph(self,window):
         tk.Label(window, text='Bar Chart')
-        data = [21, 20, 19, 16, 14, 13, 11, 9, 4, 3, 0, 1, 0, 14, 14]
-        c_width = 870
-        c_height = 300
+        #c_width = 870
+        #c_height = 130
+        c_width = 100
+        c_height = 800
         c = tk.Canvas(window, width=c_width, height=c_height, bg='white')
-        c.place(x=0,y=500)
-
+        c.place(x=-5,y=0)
+        #c.place(x=0, y=670)
         Key = self.strAdd1.get()
         lst_city = self.address_data[self.strAdd1.get()]
         self.pharm.request_num(Key, lst_city)
         Data = self.pharm.num_of_pharm
-        print(Key)
-        print(Data)
-        print(self.searchAdd2.get())
         Area = self.address_data[self.strAdd1.get()] #시/군/구 리스트
         Num = len(self.address_data[Key]) #시/군/구 갯수
+        #for i in range(Num):
+        #    c.create_rectangle((840/Num) * i, 130-Data[Area[i]]/4, 20+(840/Num) * i, 130, fill="light green")
+        #    c.create_text(17+(840/Num) * i, 120, anchor=tk.SW, text=Area[i],font = ('furisa',10),angle=90)
+        #    c.create_text(17+(840/Num) * i, 30, anchor=tk.SW, text=Data[Area[i]], font=('furisa', 10), angle=90)
+
         for i in range(Num):
-            c.create_rectangle((840/Num) * i, 200, 20+(840/Num) * i, 300, fill="light green")
-            c.create_text(17+(840/Num) * i, 300, anchor=tk.SW, text=Area[i],font = ('furisa',10),angle=90)
+            c.create_rectangle(0, 3+(800/Num) * i, Data[Area[i]]/5, 20+(800/Num) * i, fill="light blue")
+            c.create_text(0, 18+(800/Num) * i, anchor=tk.SW, text=Area[i],font = ('furisa',9),angle=0)
+            c.create_text(80, 18+(800/Num) * i, anchor=tk.SW, text=Data[Area[i]], font=('furisa', 9), angle=0)
 
 
     def showMap(self, frame):
