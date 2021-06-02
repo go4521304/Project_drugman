@@ -4,6 +4,7 @@ from cefpython3 import cefpython as cef
 from tkinter import *
 from tkinter import font
 from tkinter import ttk
+import tkinter as tk
 import threading
 import sys
 import folium
@@ -80,8 +81,34 @@ class Pharm:
                                         text="검색",
                                         command=self.SearchButtonAction,
                                         width=7)
-        searchButton.place(x=610, y=18)     # 좌표    
-    
+        searchButton.place(x=610, y=18)     # 좌표
+        self.Graph(self.frameTop)
+
+    def Graph(self,window):
+        tk.Label(window, text='Bar Chart')
+        data = [21, 20, 19, 16, 14, 13, 11, 9, 4, 3]
+        c_width = 400
+        c_height = 350
+        c = tk.Canvas(window, width=c_width, height=c_height, bg='white')
+        c.place(x=0,y=0)
+
+        # experiment with the variables below size to fit your needs
+
+        y_stretch = 15
+        y_gap = 20
+        x_stretch = 10
+        x_width = 20
+        x_gap = 20
+        for x, y in enumerate(data):
+            # calculate reactangle coordinates
+            x0 = x * x_stretch + x * x_width + x_gap
+            y0 = c_height - (y * y_stretch + y_gap)
+            x1 = x * x_stretch + x * x_width + x_width + x_gap
+            y1 = c_height - y_gap
+            # Here we draw the bar
+            c.create_rectangle(x0, y0, x1, y1, fill="red")
+            c.create_text(x0 + 2, y0, anchor=tk.SW, text=str(y))
+
     def showMap(self, frame):
         sys.excepthook = cef.ExceptHook
         self.window_info = cef.WindowInfo(frame.winfo_id())
