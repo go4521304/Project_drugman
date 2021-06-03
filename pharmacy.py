@@ -104,9 +104,9 @@ class Pharm:
         #    c.create_text(17+(840/Num) * i, 30, anchor=tk.SW, text=Data[Area[i]], font=('furisa', 10), angle=90)
 
         for i in range(Num):
-            c.create_rectangle(0, 3+(800/Num) * i, Data[Area[i]]/5, 20+(800/Num) * i, fill="light blue")
-            c.create_text(0, 18+(800/Num) * i, anchor=tk.SW, text=Area[i],font = ('furisa',9),angle=0)
-            c.create_text(80, 18+(800/Num) * i, anchor=tk.SW, text=Data[Area[i]], font=('furisa', 9), angle=0)
+            c.create_rectangle(0, (800/Num) * i, Data[Area[i]]/5, 18+(800/Num) * i, fill="light blue")
+            c.create_text(0, 15+(800/Num) * i, anchor=tk.SW, text=Area[i],font = ('furisa',9),angle=0)
+            c.create_text(80, 15+(800/Num) * i, anchor=tk.SW, text=Data[Area[i]], font=('furisa', 9), angle=0)
 
 
     def showMap(self, frame):
