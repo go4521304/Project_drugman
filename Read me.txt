@@ -3,3 +3,6 @@
 
 https://stackoverflow.com/questions/60121824/how-do-i-get-location-in-telegram-telepot
 텔레그램 사용할 예제 코드
+
+06/04
+텔레그램과 main_gui를 합칠시 오류를 뿜어냄... 원인을 몰라서 우선 분리시킴 - 쓰레드로? 함해볼까?
