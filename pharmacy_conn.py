@@ -2,13 +2,13 @@ from typing import Sized
 import pandas as pd
 import urllib
 import http.client
+import time
 conn = http.client.HTTPConnection("apis.data.go.kr")
 
 class Pharmacy:
     SERVICE_KEY = urllib.parse.quote("2ZPJttwEWTlLBUXFd85FaqaDuDsSw7BRwX5pChZ2epOCy+i0RjC5jcchv1CplZTKF/x2GiNPOC99KeY31otTEQ==")
 
     pharmacy = None
-
     num_of_pharm = None
 
     def __init__(self):
@@ -23,15 +23,23 @@ class Pharmacy:
 
             conn.request("GET","/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire?serviceKey=" + self.SERVICE_KEY 
             + "&Q0=" + Q0 + "&Q1=" + Q1 + "&ORD=NAME" + "&pageNo=0" + "&numOfRows=0")
-            req = conn.getresponse()
-            if req.status == 200:
-                from xml.etree import ElementTree
-                tree = ElementTree.fromstring(req.read().decode('utf-8'))
-                resultCode = tree.find('header').find('resultCode')
-                if resultCode.text == '00':
-                    self.num_of_pharm[add2] = int(tree.find('body').find('totalCount').text)
-            else:
-                print(req.status,req.reason)
+            
+            for errorCnt in range(5):
+                try:
+                    req = conn.getresponse()
+                    if req.status == 200:
+                        from xml.etree import ElementTree
+                        tree = ElementTree.fromstring(req.read().decode('utf-8'))
+                        resultCode = tree.find('header').find('resultCode')
+                        if resultCode.text == '00':
+                            self.num_of_pharm[add2] = int(tree.find('body').find('totalCount').text)
+                            break
+                    else:
+                        print(req.status,req.reason)
+                except Exception as ex:
+                    print("Error Count: ", errorCnt)
+                    print(ex)
+                    time.sleep(1)
 
 
     def request(self, add1 = "경기도", add2="안양시"):
@@ -44,11 +52,20 @@ class Pharmacy:
 
         conn.request("GET","/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire?serviceKey=" + self.SERVICE_KEY 
         + "&Q0=" + Q0 + "&Q1=" + Q1 + "&ORD=NAME" + "&pageNo=1" + "&numOfRows=1000")
-        req = conn.getresponse()
-        if req.status == 200:
-            self.extractData(req.read().decode('utf-8'))
-        else:
-            print(req.status,req.reason)
+
+        for errorCnt in range(5):
+            try:
+                req = conn.getresponse()
+                if req.status == 200:
+                    self.extractData(req.read().decode('utf-8'))
+                    break
+                else:
+                    print(req.status,req.reason)
+
+            except Exception as ex:
+                print("Error Count: ", errorCnt)
+                print(ex)
+                time.sleep(1)
 
 
     # 정보를 데이터 프레임에 집어넣음

@@ -129,6 +129,7 @@ class Pharm:
 
         self.pharm.request(self.strAdd1.get(), self.strAdd2.get())
 
+        # 데이터프레임 평균값 호출
         tmp = self.pharm.pharmacy.mean()
 
         m = folium.Map(location=[tmp['LAT'],tmp['LON']], zoom_start=13)
