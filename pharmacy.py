@@ -20,6 +20,9 @@ class Pharm:
 
         self.pharm = Pharmacy()
 
+        # 쓰레딩시 사용할 락
+        self.lock = threading.Lock()
+
         # 폰트
         fontSet = font.Font(family='Consolas', weight='normal', size=15)
         fontSet_Btn = font.Font(family='Consolas', weight='normal', size=12)
@@ -84,6 +87,7 @@ class Pharm:
         searchButton.place(x=610, y=18)     # 좌표
 
     def Graph(self,window):
+        self.lock.acquire() # 획득
         tk.Label(window, text='Bar Chart')
         #c_width = 870
         #c_height = 130
@@ -107,6 +111,7 @@ class Pharm:
             c.create_rectangle(0, (800/Num) * i, Data[Area[i]]/5, 18+(800/Num) * i, fill="light blue")
             c.create_text(0, 15+(800/Num) * i, anchor=tk.SW, text=Area[i],font = ('furisa',9),angle=0)
             c.create_text(80, 15+(800/Num) * i, anchor=tk.SW, text=Data[Area[i]], font=('furisa', 9), angle=0)
+        self.lock.release() # 반환
 
 
     def showMap(self, frame):
@@ -118,12 +123,17 @@ class Pharm:
         cef.MessageLoop()
 
     def SearchButtonAction(self):
-        self.mapSave()
-        self.browser.LoadUrl('file:///map.html')
+        thread = threading.Thread(target=self.mapSave)
+        thread.daemon = True
+        thread.start()
+        # self.mapSave()
+        # thread.join()
+        # self.browser.LoadUrl('file:///map.html')
         # self.browser.LoadUrl('https://www.youtube.com')
 
 
     def mapSave(self):
+        self.lock.acquire()
         if self.strAdd1.get() == "시/도" or self.strAdd2.get() == "시/군/구":
             return
 
@@ -140,8 +150,16 @@ class Pharm:
                 folium.Marker(location=[row['LAT'], row['LON']], tooltip=row['약국 이름'], popup=folium.Popup(iframe)).add_to(m)
 
         m.save('map.html')
+        self.browser.LoadUrl('file:///map.html')
+        self.lock.release()
+
 
     def selAdd1(self, event):
         self.searchAdd2.set("시/군/구")
         self.searchAdd2['value'] = self.address_data[self.strAdd1.get()]
-        self.Graph(self.frameTop)
+        thread = threading.Thread(target=self.Graph, args=(self.frameTop,))
+        thread.daemon = True
+        thread.start()
+        # self.Graph(self.frameTop)
+
+# 이것도 그래프를 연속으로 로딩을 했을때 데이터를 서로 오염시킴...

@@ -8,6 +8,7 @@ from collections import ChainMap
 import tkinter.messagebox
 from medicine_conn import *
 import requests
+import threading
 
 class Medi:
     pageNum = 0
@@ -19,6 +20,9 @@ class Medi:
         window.config(bg='light gray')
 
         self.medi = Medicine()
+
+        # 쓰레딩시 사용할 락
+        self.lock = threading.Lock()
 
         # 글꼴
         fontSet = font.Font(family='Consolas', weight='normal', size=15)
@@ -94,11 +98,11 @@ class Medi:
 
 
         # 이전 버튼
-        self.prevBtn = Button(frameBottom,  font=fontSet_Btn, text='이전', relief=FLAT, state=DISABLED, command=lambda: self.ShowList(-1),
+        self.prevBtn = Button(frameBottom,  font=fontSet_Btn, text='이전', relief=FLAT, state=DISABLED, command=lambda: self.ShowList_Tr(-1),
                                             bg='light blue', activebackground='light green')
         
         # 다음버튼
-        self.nextBtn = Button(frameBottom,  font=fontSet_Btn, text='다음', relief=FLAT, state=DISABLED, command=lambda: self.ShowList(+1),
+        self.nextBtn = Button(frameBottom,  font=fontSet_Btn, text='다음', relief=FLAT, state=DISABLED, command=lambda: self.ShowList_Tr(+1),
                                             bg='light blue', activebackground='light green')
 
         self.prevBtn.place(x=3, y=740)      # 좌표
@@ -114,12 +118,25 @@ class Medi:
             type = 1
         else:
             type = 2
-        self.medi.request(type, self.strSearch.get())
+        
+        # 스레드로 생성하여 검색 중에도 ui가 멈추지 않게 함
+        thread = threading.Thread(target=self.medi.request, args=(type, self.strSearch.get()))
+        thread.daemon = True
+        thread.start()
+        thread.join()
 
+        # 검색후 결과 표시
         self.pageNum = 0
-        self.ShowList(0)
+        self.ShowList_Tr(0)
+
+    def ShowList_Tr(self, option = 0):
+        thread = threading.Thread(target=self.ShowList, args=(option,))
+        thread.daemon = True
+        thread.start()
 
     def ShowList(self, option = 0):
+        self.lock.acquire()
+
         self.pageNum += option
         if self.pageNum == 0:
             self.nextBtn['state'] = NORMAL
@@ -134,6 +151,8 @@ class Medi:
         for i in range(8):
                 self.listBtn[i]['state'] = DISABLED
                 self.listBtn[i]['text'] = ''
+                self.listBtn[i].configure(image= self.pixelVirtual)
+                self.listBtn[i].image = self.pixelVirtual
 
         if len(self.medi.medicine) == 0:
             self.nextBtn['state'] = DISABLED
@@ -149,9 +168,23 @@ class Medi:
                 
                 self.listBtn[i]['state'] = NORMAL
                 self.listBtn[i]['text'] = self.medi.medicine[i+(self.pageNum*8)]['제품명'] + " / " + self.medi.medicine[i+(self.pageNum*8)]['업체명']
+
+                try:
+                    res = requests.get(str(self.medi.medicine[i+(self.pageNum*8)]['낱알 이미지']))
+                    img = P.open(BytesIO(res.content))
+                    img1_size = img.size
+                    img = img.resize((80, int(img1_size[1]*(80/img1_size[0]))), P.ANTIALIAS)
+                    resized_image = ImageTk.PhotoImage(image=img)
+                    self.listBtn[i].configure(image= resized_image)
+                    self.listBtn[i].image = resized_image
+
+                except:
+                    pass
             
             if (i+1)+(self.pageNum*8) >= len(self.medi.medicine):
                 self.nextBtn['state'] = DISABLED
+
+        self.lock.release()
 
 
 
@@ -185,3 +218,6 @@ class Medi:
                 
         RenderText.pack(side='left')
         RenderTextScrollbar.pack(side='right', fill='y')
+
+# showlist 실행중 검색을 실행하면
+# 중간에 리스트내 항목을 건드려서 내용이 오염됨
