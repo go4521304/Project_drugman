@@ -197,8 +197,6 @@ class Medi:
         detail.resizable(0, 0)
         detail.title('자세히 보기')
 
-
-
         RenderTextScrollbar = Scrollbar(detail)
 
         TempFont = font.Font(detail, size=10, family='Malgun Gothic')
@@ -223,10 +221,13 @@ class Medi:
 
         Gimage = PhotoImage(file='./resource/logo-gmail.png')
         Send = Button(detail, image=Gimage, command=lambda: self.email_send(index))
-        Send.pack(side='bottom')
+        Send.configure(image= Gimage)
+        Send.image = Gimage
+        Send.pack(side='top')
 
         RenderText.pack(side='left')
         RenderTextScrollbar.pack(side='right', fill='y')
+
 
     def email_send(self,index):
         for i in self.medi.COLUMNS:
