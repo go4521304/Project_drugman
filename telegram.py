@@ -2,8 +2,6 @@ import telepot
 import time
 import telegram_conn
 
-TOKEN = '1816265019:AAFgDtAJX_yV8RgN73cHG37ovAbbKbVrRCY'
-
 def handle(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
     if content_type == 'location':
