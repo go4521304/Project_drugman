@@ -10,6 +10,10 @@ from medicine_conn import *
 import requests
 import threading
 
+#이메일 테스트
+import smtplib
+s = smtplib.SMTP("smtp.gmail.com", 587)
+
 class Medi:
     pageNum = 0
     
@@ -193,6 +197,8 @@ class Medi:
         detail.resizable(0, 0)
         detail.title('자세히 보기')
 
+
+
         RenderTextScrollbar = Scrollbar(detail)
 
         TempFont = font.Font(detail, size=10, family='Malgun Gothic')
@@ -214,10 +220,17 @@ class Medi:
 
                 except:
                     label = None
-                
-                
+
+        Gimage = PhotoImage(file='./resource/logo-gmail.png')
+        Send = Button(detail, image=Gimage, command=lambda: self.email_send(index))
+        Send.pack(side='bottom')
+
         RenderText.pack(side='left')
         RenderTextScrollbar.pack(side='right', fill='y')
+
+    def email_send(self,index):
+        for i in self.medi.COLUMNS:
+            print(str(self.medi.medicine[index+(self.pageNum*8)][i]))
 
 # showlist 실행중 검색을 실행하면
 # 중간에 리스트내 항목을 건드려서 내용이 오염됨
