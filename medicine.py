@@ -9,18 +9,19 @@ import tkinter.messagebox
 from medicine_conn import *
 import requests
 import threading
+import io
 
 #이메일 테스트
 import mimetypes
 import smtplib
 from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
+from email.mime.image     import MIMEImage
+from email import encoders
 from email.mime.multipart import MIMEMultipart  # MIMEMultipart MIME 생성
 
 host = "smtp.gmail.com" # Gmail STMP 서버 주소.
 port = "587"
-htmlFileName = "logo.html"
-
 
 class Medi:
     pageNum = 0
@@ -217,6 +218,7 @@ class Medi:
                 try:
                     res = requests.get(str(self.medi.medicine[index+(self.pageNum*8)][i]))
                     img = P.open(BytesIO(res.content))
+                    self.info_img = img
                     img1_size = img.size
                     img = img.resize((400, int(img1_size[1]*(400/img1_size[0]))), P.ANTIALIAS)
                     resized_image = ImageTk.PhotoImage(image=img)
@@ -226,6 +228,8 @@ class Medi:
 
                 except:
                     label = None
+
+        self.info = RenderText.get(1.0, "end")
 
         Gimage = PhotoImage(file='./resource/logo-gmail.png')
         Send = Button(detail, image=Gimage, command=lambda: self.email_send(index))
@@ -245,52 +249,50 @@ class Medi:
         global host, port
         self.html = ""
 
-        titleT = Label(new,text='제목을 입력하세요').place(x=5,y=10)
-        self.str1 = StringVar()
-        self.title = ttk.Entry(new ,width=30,textvariable=self.str1)
-        self.title.place(x=180,y = 10)
+        Label(new,text='제목을 입력하세요').place(x=5,y=10)
+        self.title = StringVar()
+        ttk.Entry(new ,width=30,textvariable=self.title).place(x=180,y = 10)
 
-        titleT = Label(new,text='이메일을 입력하세요').place(x=5,y=40)
-        self.str2 = StringVar()
-        self.senderAddr = ttk.Entry(new ,width=30,textvariable=self.str2)
-        self.senderAddr.place(x=180,y=40)
+        Label(new,text='이메일을 입력하세요').place(x=5,y=40)
+        self.senderAddr = StringVar()
+        ttk.Entry(new ,width=30,textvariable=self.senderAddr).place(x=180,y=40)
 
-        titleT = Label(new,text='받는사람 이메일을 입력하세요').place(x=5,y=70)
-        self.str3 = StringVar()
-        self.recipientAddr = ttk.Entry(new ,width=30,textvariable=self.str3)
-        self.recipientAddr.place(x=180,y=70)
+        Label(new,text='받는사람 이메일을 입력하세요').place(x=5,y=70)
+        self.recipientAddr = StringVar()
+        ttk.Entry(new ,width=30,textvariable=self.recipientAddr).place(x=180,y=70)
 
-        self.msgtext=''
-        for i in self.medi.COLUMNS:
-            self.msgtext += (str((self.medi.medicine[index+(self.pageNum*8)][i])) + "\n\n")
-        #print(msgtext)
+        Label(new,text='비밀번호 입력하세요').place(x=5,y=100)
+        self.passwd = StringVar()
+        ttk.Entry(new ,width=20,textvariable=self.passwd, show="*").place(x=180, y=100)
 
-        titleT = Label(new,text='비밀번호 입력하세요').place(x=5,y=100)
-        self.str4 = StringVar()
-        self.passwd = ttk.Entry(new ,width=20,textvariable=self.str4)
-        self.passwd.place(x=180, y=100)
-
-        self.msg = MIMEMultipart('alternative')  # Message container를 생성
-
-        send = Button(new,text="보내기!",command=lambda:self.send_Button())
-        send.pack(side="left")
+        Button(new,text="보내기!",command=lambda:self.send_Button()).pack(side="left")
 
 
     def send_Button(self):
         global host, port
 
-        Title = self.str1.get()
-        Email = self.str2.get()
-        toEmail = self.str3.get()
-        Pass = self.str4.get()
+        Title = self.title.get()
+        Email = self.senderAddr.get()
+        toEmail = self.recipientAddr.get()
+        Pass = self.passwd.get()
+
+        self.msg = MIMEMultipart('alternative')  # Message container를 생성
 
         self.msg['Subject'] = Title  # set message
         self.msg['From'] = Email
         self.msg['To'] = toEmail
-        msgPart = MIMEText(self.msgtext, 'plain')
-        bookPart = MIMEText(self.html, 'html', _charset='UTF-8')
-        self.msg.attach(msgPart)  # 메세지에 생성한 MIME 문서를 첨부합니다
-        self.msg.attach(bookPart)
+        bodyPart = MIMEText(self.info, 'plain')
+        self.msg.attach(bodyPart)
+
+        if self.info_img:
+            img_byte_arr = io.BytesIO()
+            self.info_img.save(img_byte_arr, format='PNG')
+            img_byte_arr = img_byte_arr.getvalue()
+
+            imagePart = MIMEImage(img_byte_arr)
+            imagePart.add_header('Content-Disposition', 'attachment', filename="pill.png") 
+            self.msg.attach(imagePart)
+
         print("connect smtp server ... ")
         s = smtplib.SMTP(host, port)  # python3.6에서는 smtplib.SMTP(host,port)
 
