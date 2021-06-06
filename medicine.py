@@ -246,11 +246,19 @@ class Medi:
         self.html = ""
 
         titleT = Label(new,text='제목을 입력하세요').place(x=5,y=10)
-        self.title = ttk.Entry(new ,width=30,textvariable=str).place(x=180,y = 10)
+        self.str1 = StringVar()
+        self.title = ttk.Entry(new ,width=30,textvariable=self.str1)
+        self.title.place(x=180,y = 10)
+
         titleT = Label(new,text='이메일을 입력하세요').place(x=5,y=40)
-        self.senderAddr = ttk.Entry(new ,width=30,textvariable=str).place(x=180,y=40)
+        self.str2 = StringVar()
+        self.senderAddr = ttk.Entry(new ,width=30,textvariable=self.str2)
+        self.senderAddr.place(x=180,y=40)
+
         titleT = Label(new,text='받는사람 이메일을 입력하세요').place(x=5,y=70)
-        self.recipientAddr = ttk.Entry(new ,width=30,textvariable=str).place(x=180,y=70)
+        self.str3 = StringVar()
+        self.recipientAddr = ttk.Entry(new ,width=30,textvariable=self.str3)
+        self.recipientAddr.place(x=180,y=70)
 
         self.msgtext=''
         for i in self.medi.COLUMNS:
@@ -258,7 +266,10 @@ class Medi:
         #print(msgtext)
 
         titleT = Label(new,text='비밀번호 입력하세요').place(x=5,y=100)
-        self.passwd = ttk.Entry(new ,width=20,textvariable=str).place(x=180,y=100)
+        self.str4 = StringVar()
+        self.passwd = ttk.Entry(new ,width=20,textvariable=self.str4)
+        self.passwd.place(x=180, y=100)
+
         self.msg = MIMEMultipart('alternative')  # Message container를 생성
 
         send = Button(new,text="보내기!",command=lambda:self.send_Button())
@@ -267,9 +278,15 @@ class Medi:
 
     def send_Button(self):
         global host, port
-        self.msg['Subject'] = self.title  # set message
-        self.msg['From'] = self.senderAddr
-        self.msg['To'] = self.recipientAddr
+
+        Title = self.str1.get()
+        Email = self.str2.get()
+        toEmail = self.str3.get()
+        Pass = self.str4.get()
+
+        self.msg['Subject'] = Title  # set message
+        self.msg['From'] = Email
+        self.msg['To'] = toEmail
         msgPart = MIMEText(self.msgtext, 'plain')
         bookPart = MIMEText(self.html, 'html', _charset='UTF-8')
         self.msg.attach(msgPart)  # 메세지에 생성한 MIME 문서를 첨부합니다
@@ -280,8 +297,8 @@ class Medi:
         s.ehlo()
         s.starttls()
         s.ehlo()
-        s.login(self.senderAddr, self.passwd)  # 로그인
-        s.sendmail(self.senderAddr, [recipientAddr], self.msg.as_string())
+        s.login(Email, Pass)  # 로그인
+        s.sendmail(Email, [toEmail], self.msg.as_string())
         s.close()
         print("Mail sending complete!!!")
 
