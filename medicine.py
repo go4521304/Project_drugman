@@ -11,8 +11,16 @@ import requests
 import threading
 
 #이메일 테스트
+import mimetypes
 import smtplib
-s = smtplib.SMTP("smtp.gmail.com", 587)
+from email.mime.base import MIMEBase
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart  # MIMEMultipart MIME 생성
+
+host = "smtp.gmail.com" # Gmail STMP 서버 주소.
+port = "587"
+htmlFileName = "logo.html"
+
 
 class Medi:
     pageNum = 0
@@ -230,8 +238,51 @@ class Medi:
 
 
     def email_send(self,index):
+        new = Toplevel()
+        new.geometry("400x200")
+        new.title('Email 전송')
+
+        global host, port
+        self.html = ""
+
+        titleT = Label(new,text='제목을 입력하세요').place(x=5,y=10)
+        self.title = ttk.Entry(new ,width=30,textvariable=str).place(x=180,y = 10)
+        titleT = Label(new,text='이메일을 입력하세요').place(x=5,y=30)
+        self.senderAddr = ttk.Entry(new ,width=30,textvariable=str).place(x=180,y=30)
+        titleT = Label(new,text='받는사람 이메일을 입력하세요').place(x=5,y=50)
+        self.recipientAddr = ttk.Entry(new ,width=30,textvariable=str).place(x=180,y=50)
+
+        self.msgtext=''
         for i in self.medi.COLUMNS:
-            print(str(self.medi.medicine[index+(self.pageNum*8)][i]))
+            self.msgtext += (str((self.medi.medicine[index+(self.pageNum*8)][i])) + "\n\n")
+        #print(msgtext)
+
+        titleT = Label(new,text='비밀번호 입력하세요').place(x=5,y=70)
+        self.passwd = ttk.Entry(new ,width=20,textvariable=str).place(x=180,y=70)
+        self.msg = MIMEMultipart('alternative')  # Message container를 생성
+
+        send = Button(new,text="보내기!",command=self.send_Button())
+        send.pack(side="right")
+
+
+    def send_Button(self):
+        self.msg['Subject'] = self.title  # set message
+        self.msg['From'] = self.senderAddr
+        self.msg['To'] = self.recipientAddr
+        msgPart = MIMEText(self.msgtext, 'plain')
+        bookPart = MIMEText(self.html, 'html', _charset='UTF-8')
+        msg.attach(msgPart)  # 메세지에 생성한 MIME 문서를 첨부합니다
+        msg.attach(bookPart)
+        print("connect smtp server ... ")
+        s = smtplib.SMTP(host, port)  # python3.6에서는 smtplib.SMTP(host,port)
+
+        s.ehlo()
+        s.starttls()
+        s.ehlo()
+        s.login(self.senderAddr, self.passwd)  # 로그인
+        s.sendmail(self.senderAddr, [recipientAddr], self.msg.as_string())
+        s.close()
+        print("Mail sending complete!!!")
 
 # showlist 실행중 검색을 실행하면
 # 중간에 리스트내 항목을 건드려서 내용이 오염됨
