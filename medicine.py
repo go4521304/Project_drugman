@@ -247,32 +247,33 @@ class Medi:
 
         titleT = Label(new,text='제목을 입력하세요').place(x=5,y=10)
         self.title = ttk.Entry(new ,width=30,textvariable=str).place(x=180,y = 10)
-        titleT = Label(new,text='이메일을 입력하세요').place(x=5,y=30)
-        self.senderAddr = ttk.Entry(new ,width=30,textvariable=str).place(x=180,y=30)
-        titleT = Label(new,text='받는사람 이메일을 입력하세요').place(x=5,y=50)
-        self.recipientAddr = ttk.Entry(new ,width=30,textvariable=str).place(x=180,y=50)
+        titleT = Label(new,text='이메일을 입력하세요').place(x=5,y=40)
+        self.senderAddr = ttk.Entry(new ,width=30,textvariable=str).place(x=180,y=40)
+        titleT = Label(new,text='받는사람 이메일을 입력하세요').place(x=5,y=70)
+        self.recipientAddr = ttk.Entry(new ,width=30,textvariable=str).place(x=180,y=70)
 
         self.msgtext=''
         for i in self.medi.COLUMNS:
             self.msgtext += (str((self.medi.medicine[index+(self.pageNum*8)][i])) + "\n\n")
         #print(msgtext)
 
-        titleT = Label(new,text='비밀번호 입력하세요').place(x=5,y=70)
-        self.passwd = ttk.Entry(new ,width=20,textvariable=str).place(x=180,y=70)
+        titleT = Label(new,text='비밀번호 입력하세요').place(x=5,y=100)
+        self.passwd = ttk.Entry(new ,width=20,textvariable=str).place(x=180,y=100)
         self.msg = MIMEMultipart('alternative')  # Message container를 생성
 
-        send = Button(new,text="보내기!",command=self.send_Button())
-        send.pack(side="right")
+        send = Button(new,text="보내기!",command=lambda:self.send_Button())
+        send.pack(side="left")
 
 
     def send_Button(self):
+        global host, port
         self.msg['Subject'] = self.title  # set message
         self.msg['From'] = self.senderAddr
         self.msg['To'] = self.recipientAddr
         msgPart = MIMEText(self.msgtext, 'plain')
         bookPart = MIMEText(self.html, 'html', _charset='UTF-8')
-        msg.attach(msgPart)  # 메세지에 생성한 MIME 문서를 첨부합니다
-        msg.attach(bookPart)
+        self.msg.attach(msgPart)  # 메세지에 생성한 MIME 문서를 첨부합니다
+        self.msg.attach(bookPart)
         print("connect smtp server ... ")
         s = smtplib.SMTP(host, port)  # python3.6에서는 smtplib.SMTP(host,port)
 
