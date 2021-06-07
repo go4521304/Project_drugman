@@ -265,7 +265,8 @@ class Medi:
         self.passwd = StringVar()
         ttk.Entry(new ,width=20,textvariable=self.passwd, show="*").place(x=180, y=100)
 
-        Button(new,text="보내기!",command=lambda:self.send_Button()).pack(side="left")
+        tempFont = font.Font(size=20,weight='bold')
+        Button(new,text="보내기!",font=tempFont,command =lambda:self.send_Button()).pack(side="bottom")
 
 
     def send_Button(self):
