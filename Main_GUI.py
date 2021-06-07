@@ -41,9 +41,10 @@ class Main_GUI:
         self.canvas_B = Canvas(frameB, width=330, height=900)
         self.canvas_B.place(x=0, y=0)
         
-        self.canvas_C = Canvas(self.frameS,bg='gray', width=870, height=920)
+        self.canvas_C = Canvas(self.frameS,bg='light gray', width=870, height=920)
         self.canvas_C.place(x=0, y=-10)
         self.canvas_B.create_rectangle(10,10,320,890,width=7,outline='light blue')
+        #self.canvas_C.create_rectangle(20, 20, 850, 900, width=7, outline='light blue')
         # 이미지 관리용 dict 생성
         image = {}
 
@@ -52,6 +53,7 @@ class Main_GUI:
         image['textImg'] = PhotoImage(file='./resource/text.png')
         self.Pharmachy = Button(frameB, text='약', image=image['medicine'], command=self.Draw_M,relief='flat')
         self.Medicine = Button(frameB, text='국', image=image['pharmacy'], command=self.Draw_P,relief='flat')
+        self.Text = Button(self.canvas_C, image=image['textImg'],relief='flat')
         #self.textImg = Button(self.frameS, text='글', image=image['textImg'], relief='flat')
         # 디버그용 그리드
         #for i in range(4):
@@ -64,8 +66,10 @@ class Main_GUI:
         #        self.canvas_C.create_line(0,100*j,870,100*j,fill = "red")
 
 
-        self.Pharmachy.place(x=35,y=250)
+        self.Pharmachy.place(x=35,y=300)
         self.Medicine.place(x=35,y=600)
+
+
         #self.textImg.place(x=0,y=50)
         #1
         self.window.mainloop()
