@@ -16,7 +16,7 @@ class Pharm:
         # window = Tk()
         # window.title('pharmacy')
         # window.geometry('870x900')
-        window.config(bg='light gray')
+        window.config(bg='light blue')
 
         self.pharm = Pharmacy()
 
