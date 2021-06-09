@@ -1,5 +1,8 @@
 __pycache__/
 webrtc_event_logs/
 blob_storage/
+build/
+dist/
 error.log
 map.html
+*.spec

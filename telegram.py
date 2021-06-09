@@ -2,7 +2,7 @@ import telepot
 import time
 import telegram_conn
 
-TOKEN = ''
+TOKEN = '1856984396:AAHLHAzzf1fEu2nYAHY3DQBNzA9Q8YFI6h4'
 
 def handle(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)

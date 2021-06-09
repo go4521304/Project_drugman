@@ -5,6 +5,9 @@ import medicine as MD
 import pharmacy as PM
 import Search as SH
 
+import threading
+import subprocess
+
 class Main_GUI:
     def Draw_P(self): # Parmachy
         self.framePM.tkraise()
@@ -13,7 +16,7 @@ class Main_GUI:
         self.frameMD.tkraise()
 
     def Draw_S(self): #Search
-        self.frameSH.tkraise()
+        self.frameSH.tkraise()  
 
     def __init__(self):
         # 창 기본설정 (타이틀, 크기, 크기조정 불가)
@@ -101,6 +104,12 @@ class Main_GUI:
         self.window.geometry('1200x900')
         self.Draw_S()
 
+def onTelegram():
+    args = ['telegram.exe']
+    subprocess.call(args)
 
 if __name__ == "__main__":
+    t = threading.Thread(target=onTelegram)
+    t.daemon = True
+    t.start()
     Main_GUI()
