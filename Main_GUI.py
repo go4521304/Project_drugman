@@ -61,8 +61,8 @@ class Main_GUI:
         image['pharmacy'] = PhotoImage(file='./resource/pharmacy.png')
         image['textImg'] = PhotoImage(file='./resource/text.png')
         image['search'] = PhotoImage(file='./resource/search.png')
-        self.Pharmachy = Button(frameB, text='약', image=image['medicine'], command=self.Click_P,relief='flat', bg='white')
-        self.Medicine = Button(frameB, text='국', image=image['pharmacy'], command=self.Click_M,relief='flat', bg='white')
+        self.Pharmachy = Button(frameB, text='약', image=image['medicine'], command=self.Click_M,relief='flat', bg='white')
+        self.Medicine = Button(frameB, text='국', image=image['pharmacy'], command=self.Click_P,relief='flat', bg='white')
         self.Search = Button(frameB, text='검', image=image['search'], command=self.Click_S, relief='flat',bg='white')
 
         self.Text = Button(self.canvas_C, image=image['textImg'],relief='flat')
