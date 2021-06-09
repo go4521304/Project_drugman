@@ -164,5 +164,3 @@ class Pharm:
         thread.daemon = True
         thread.start()
         # self.Graph(self.frameTop)
-
-# 이것도 그래프를 연속으로 로딩을 했을때 데이터를 서로 오염시킴...

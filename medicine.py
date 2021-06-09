@@ -239,7 +239,7 @@ class Medi:
         Send.configure(image= Gimage)
         Send.image = Gimage
         Send.pack(side='top')
-        
+
         tmp = spam.strlen(self.info)
         Label(detail, text= "글자수: " + str(tmp), font=TempFont).pack(side='top')
 
@@ -313,6 +313,3 @@ class Medi:
         s.sendmail(Email, [toEmail], self.msg.as_string())
         s.close()
         print("Mail sending complete!!!")
-
-# showlist 실행중 검색을 실행하면
-# 중간에 리스트내 항목을 건드려서 내용이 오염됨
