@@ -3,6 +3,7 @@
 from tkinter import *
 import medicine as MD
 import pharmacy as PM
+import Search as SH
 
 class Main_GUI:
     def Draw_P(self): # Parmachy
@@ -10,6 +11,9 @@ class Main_GUI:
 
     def Draw_M(self): # Medicine
         self.frameMD.tkraise()
+
+    def Draw_S(self): #Search
+        self.frameSH.tkraise()
 
     def __init__(self):
         # 창 기본설정 (타이틀, 크기, 크기조정 불가)
@@ -31,6 +35,11 @@ class Main_GUI:
         self.framePM = Frame(self.window, width=870, height=900)
         self.framePM.place(x=330, y=0)
         PM.Pharm(self.framePM)
+
+        # Pharmacy 프레임
+        self.frameSH = Frame(self.window, width=870, height=900)
+        self.frameSH.place(x=330, y=0)
+        #SH.showMap(self.frameSH)
 
         # 초기화면 프레임
         self.frameS = Frame(self.window, bg='white', width=870, height=900)
@@ -54,7 +63,8 @@ class Main_GUI:
         image['search'] = PhotoImage(file='./resource/search.png')
         self.Pharmachy = Button(frameB, text='약', image=image['medicine'], command=self.Draw_M,relief='flat', bg='white')
         self.Medicine = Button(frameB, text='국', image=image['pharmacy'], command=self.Draw_P,relief='flat', bg='white')
-        self.Search = Button(frameB, text='검', image=image['search'], command=self.Draw_P, relief='flat',bg='white')
+        self.Search = Button(frameB, text='검', image=image['search'], command=self.Draw_S, relief='flat',bg='white')
+
         self.Text = Button(self.canvas_C, image=image['textImg'],relief='flat')
         self.textImg = Button(frameB, text='글', image=image['textImg'], relief='flat',bg='white')
         # 디버그용 그리드
