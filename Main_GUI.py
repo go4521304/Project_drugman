@@ -104,5 +104,3 @@ class Main_GUI:
 
 if __name__ == "__main__":
     Main_GUI()
-
-
