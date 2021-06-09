@@ -19,7 +19,7 @@ class Main_GUI:
         # 창 기본설정 (타이틀, 크기, 크기조정 불가)
         self.window = Tk()
         self.window.title("약 좀 주세요 ~약 먹을 시간~")
-        self.window.geometry('1200x900')
+        self.window.geometry('330x900')
         self.window.resizable(False, False)
 
         # 프레임 분리
