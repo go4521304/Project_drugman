@@ -20,6 +20,9 @@ from email.mime.image     import MIMEImage
 from email import encoders
 from email.mime.multipart import MIMEMultipart  # MIMEMultipart MIME 생성
 
+#C,C++ 연동
+import spam
+
 host = "smtp.gmail.com" # Gmail STMP 서버 주소.
 port = "587"
 
@@ -269,13 +272,18 @@ class Medi:
         Button(new,text="보내기!",font=tempFont,command =lambda:self.send_Button()).pack(side="bottom")
 
 
+
+
     def send_Button(self):
         global host, port
 
         Title = self.title.get()
+
         Email = self.senderAddr.get()
         toEmail = self.recipientAddr.get()
         Pass = self.passwd.get()
+
+        print(spam.strlen(Title))
 
         self.msg = MIMEMultipart('alternative')  # Message container를 생성
 
