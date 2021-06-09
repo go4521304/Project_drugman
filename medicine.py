@@ -21,7 +21,7 @@ from email import encoders
 from email.mime.multipart import MIMEMultipart  # MIMEMultipart MIME 생성
 
 #C,C++ 연동
-import spam
+#import spam
 
 host = "smtp.gmail.com" # Gmail STMP 서버 주소.
 port = "587"

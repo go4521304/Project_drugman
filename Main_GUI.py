@@ -61,9 +61,9 @@ class Main_GUI:
         image['pharmacy'] = PhotoImage(file='./resource/pharmacy.png')
         image['textImg'] = PhotoImage(file='./resource/text.png')
         image['search'] = PhotoImage(file='./resource/search.png')
-        self.Pharmachy = Button(frameB, text='약', image=image['medicine'], command=self.Draw_M,relief='flat', bg='white')
-        self.Medicine = Button(frameB, text='국', image=image['pharmacy'], command=self.Draw_P,relief='flat', bg='white')
-        self.Search = Button(frameB, text='검', image=image['search'], command=self.Draw_S, relief='flat',bg='white')
+        self.Pharmachy = Button(frameB, text='약', image=image['medicine'], command=self.Click_P,relief='flat', bg='white')
+        self.Medicine = Button(frameB, text='국', image=image['pharmacy'], command=self.Click_M,relief='flat', bg='white')
+        self.Search = Button(frameB, text='검', image=image['search'], command=self.Click_S, relief='flat',bg='white')
 
         self.Text = Button(self.canvas_C, image=image['textImg'],relief='flat')
         self.textImg = Button(frameB, text='글', image=image['textImg'], relief='flat',bg='white')
@@ -88,6 +88,19 @@ class Main_GUI:
         self.textImg.place(x=10,y=0)
         #1
         self.window.mainloop()
+
+    def Click_P(self):
+        self.window.geometry('1200x900')
+        self.Draw_P()
+
+    def Click_M(self):
+        self.window.geometry('1200x900')
+        self.Draw_M()
+
+    def Click_S(self):
+        self.window.geometry('1200x900')
+        self.Draw_S()
+
 
 if __name__ == "__main__":
     Main_GUI()
