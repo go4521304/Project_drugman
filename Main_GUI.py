@@ -51,8 +51,10 @@ class Main_GUI:
         image['medicine'] = PhotoImage(file='./resource/medicine.png')
         image['pharmacy'] = PhotoImage(file='./resource/pharmacy.png')
         image['textImg'] = PhotoImage(file='./resource/text.png')
+        image['search'] = PhotoImage(file='./resource/search.png')
         self.Pharmachy = Button(frameB, text='약', image=image['medicine'], command=self.Draw_M,relief='flat', bg='white')
         self.Medicine = Button(frameB, text='국', image=image['pharmacy'], command=self.Draw_P,relief='flat', bg='white')
+        self.Search = Button(frameB, text='검', image=image['search'], command=self.Draw_P, relief='flat',bg='white')
         self.Text = Button(self.canvas_C, image=image['textImg'],relief='flat')
         self.textImg = Button(frameB, text='글', image=image['textImg'], relief='flat',bg='white')
         # 디버그용 그리드
@@ -66,8 +68,9 @@ class Main_GUI:
         #        self.canvas_C.create_line(0,100*j,870,100*j,fill = "red")
 
 
-        self.Pharmachy.place(x=35,y=300)
-        self.Medicine.place(x=35,y=600)
+        self.Search.place(x=35,y=100)
+        self.Pharmachy.place(x=35,y=360)
+        self.Medicine.place(x=35,y=620)
 
 
         self.textImg.place(x=10,y=0)
