@@ -12,7 +12,7 @@ import json
 from pharmacy_conn import *
 
 class Pharm:
-    def __init__(self, window):
+    def __init__(self, window, Search):
         # window = Tk()
         # window.title('pharmacy')
         # window.geometry('870x900')
@@ -53,7 +53,7 @@ class Pharm:
 
         ###################### 상단부 영역 위젯들 ######################
         # 지도
-        thread = threading.Thread(target=self.showMap, args=(self.frameTop,))
+        thread = threading.Thread(target=self.showMap, args=(self.frameTop, Search))
         thread.daemon = True
         thread.start()
 
@@ -114,12 +114,15 @@ class Pharm:
         self.lock.release() # 반환
 
 
-    def showMap(self, frame):
+    def showMap(self, frame, Search):
         sys.excepthook = cef.ExceptHook
         self.window_info = cef.WindowInfo(frame.winfo_id())
         self.window_info.SetAsChild(frame.winfo_id(), [3,3,847,797])
         cef.Initialize()
         self.browser = cef.CreateBrowserSync(self.window_info, url='file:///map.html')
+
+        Search.showWeb()
+        
         cef.MessageLoop()
 
     def SearchButtonAction(self):
@@ -161,17 +164,5 @@ class Pharm:
         thread.daemon = True
         thread.start()
         # self.Graph(self.frameTop)
-
-    def pharm_page(self):
-        self.browser.LoadUrl('file:///map.html')
-        self.searchAdd1.place(x=160, y=20)        # 좌표
-        self.searchAdd2.place(x=360, y=20)
-        self.searchButton.place(x=610, y=18)
-
-    def search_page(self):
-        self.browser.LoadUrl('https://www.health.kr/searchIdentity/search.asp')
-        self.searchAdd1.place_forget()
-        self.searchAdd2.place_forget()
-        self.searchButton.place_forget()
 
 # 이것도 그래프를 연속으로 로딩을 했을때 데이터를 서로 오염시킴...
