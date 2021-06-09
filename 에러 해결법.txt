@@ -1,0 +1,6 @@
+pyinstaller folium 모듈 에러
+http://blog.naver.com/dudrb523/222246552556
+https://stackoverflow.com/questions/54836440/branca-python-module-is-unable-to-find-2-essential-json-files-when-running-an-ex
+
+cef 에러
+https://stackoverflow.com/questions/64339096/failed-to-create-executable-with-pyinstaller-and-cefpython-on-linux-invalid-fil
