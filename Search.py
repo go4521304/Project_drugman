@@ -11,14 +11,7 @@ class Search:
                                 bg='light blue',
                                 highlightbackground='white',
                                 highlightcolor='white')
-
-        # image = PhotoImage(file='./resource/home.png')
-        # Button(window, image=image, command=self.home, relief='flat',bg='white')
-
         self.frame.place(x=10, y=10)  
-
-    # def home(self):
-    #     self.browser.LoadUrl('https://www.health.kr/searchIdentity/search.asp')
 
     def showWeb(self):
         self.window_info = cef.WindowInfo(self.frame.winfo_id())
