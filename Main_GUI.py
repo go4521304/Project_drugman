@@ -3,17 +3,18 @@
 from tkinter import *
 import medicine as MD
 import pharmacy as PM
-import Search as SH
 
 class Main_GUI:
     def Draw_P(self): # Parmachy
+        self.PM.pharm_page()
         self.framePM.tkraise()
 
     def Draw_M(self): # Medicine
         self.frameMD.tkraise()
 
     def Draw_S(self): #Search
-        self.frameSH.tkraise()
+        self.PM.search_page()
+        self.framePM.tkraise()
 
     def __init__(self):
         # 창 기본설정 (타이틀, 크기, 크기조정 불가)
@@ -34,12 +35,12 @@ class Main_GUI:
         # Pharmacy 프레임
         self.framePM = Frame(self.window, width=870, height=900)
         self.framePM.place(x=330, y=0)
-        PM.Pharm(self.framePM)
+        self.PM = PM.Pharm(self.framePM)
 
-        # Pharmacy 프레임
+        # Search 프레임
         self.frameSH = Frame(self.window, width=870, height=900)
         self.frameSH.place(x=330, y=0)
-        #SH.showMap(self.frameSH)
+        # SH.Search(self.frameSH)
 
         # 초기화면 프레임
         self.frameS = Frame(self.window, bg='white', width=870, height=900)
@@ -81,6 +82,8 @@ class Main_GUI:
         self.Search.place(x=35,y=100)
         self.Pharmachy.place(x=35,y=360)
         self.Medicine.place(x=35,y=620)
+
+        self.framePM.tkraise()
 
 
         self.textImg.place(x=10,y=0)

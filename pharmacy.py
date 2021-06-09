@@ -62,14 +62,14 @@ class Pharm:
             self.address_data = json.load(f)
         # 주소1
         self.strAdd1 = StringVar()
-        searchAdd1 = ttk.Combobox(frameBottom, state='readonly',
+        self.searchAdd1 = ttk.Combobox(frameBottom, state='readonly',
                                             font=fontSet,
                                             values=list(self.address_data.keys()),
                                             textvariable=self.strAdd1,
                                             width=15)
-        searchAdd1.bind("<<ComboboxSelected>>", self.selAdd1)
-        searchAdd1.set("시/도")
-        searchAdd1.place(x=160, y=20)        # 좌표
+        self.searchAdd1.bind("<<ComboboxSelected>>", self.selAdd1)
+        self.searchAdd1.set("시/도")
+        self.searchAdd1.place(x=160, y=20)        # 좌표
 
         self.strAdd2 = StringVar()
         self.searchAdd2 = ttk.Combobox(frameBottom, state='readonly',
@@ -80,11 +80,11 @@ class Pharm:
         self.searchAdd2.place(x=360, y=20)        # 좌표
 
         # 검색버튼
-        searchButton = Button(frameBottom, font=fontSet_Btn,
+        self.searchButton = Button(frameBottom, font=fontSet_Btn,
                                         text="검색",
                                         command=self.SearchButtonAction,
                                         width=7)
-        searchButton.place(x=610, y=18)     # 좌표
+        self.searchButton.place(x=610, y=18)     # 좌표
 
     def Graph(self,window):
         self.lock.acquire() # 획득
@@ -161,5 +161,17 @@ class Pharm:
         thread.daemon = True
         thread.start()
         # self.Graph(self.frameTop)
+
+    def pharm_page(self):
+        self.browser.LoadUrl('file:///map.html')
+        self.searchAdd1.place(x=160, y=20)        # 좌표
+        self.searchAdd2.place(x=360, y=20)
+        self.searchButton.place(x=610, y=18)
+
+    def search_page(self):
+        self.browser.LoadUrl('https://www.health.kr/searchIdentity/search.asp')
+        self.searchAdd1.place_forget()
+        self.searchAdd2.place_forget()
+        self.searchButton.place_forget()
 
 # 이것도 그래프를 연속으로 로딩을 했을때 데이터를 서로 오염시킴...
