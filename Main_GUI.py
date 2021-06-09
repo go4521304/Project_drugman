@@ -54,7 +54,7 @@ class Main_GUI:
         self.Pharmachy = Button(frameB, text='약', image=image['medicine'], command=self.Draw_M,relief='flat', bg='white')
         self.Medicine = Button(frameB, text='국', image=image['pharmacy'], command=self.Draw_P,relief='flat', bg='white')
         self.Text = Button(self.canvas_C, image=image['textImg'],relief='flat')
-        #self.textImg = Button(self.frameS, text='글', image=image['textImg'], relief='flat')
+        self.textImg = Button(frameB, text='글', image=image['textImg'], relief='flat',bg='white')
         # 디버그용 그리드
         #for i in range(4):
         #    for j in range(9):
@@ -70,7 +70,7 @@ class Main_GUI:
         self.Medicine.place(x=35,y=600)
 
 
-        #self.textImg.place(x=0,y=50)
+        self.textImg.place(x=10,y=0)
         #1
         self.window.mainloop()
 
