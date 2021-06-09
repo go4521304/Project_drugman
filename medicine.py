@@ -239,6 +239,7 @@ class Medi:
         Send.configure(image= Gimage)
         Send.image = Gimage
         Send.pack(side='top')
+        Label(detail, text= "글자수: " + str(spam.strlen(self.info)//2), font=TempFont).pack(side='top')
 
         RenderText.pack(side='left')
         RenderTextScrollbar.pack(side='right', fill='y')
@@ -282,8 +283,6 @@ class Medi:
         Email = self.senderAddr.get()
         toEmail = self.recipientAddr.get()
         Pass = self.passwd.get()
-
-        print(spam.strlen(Title))
 
         self.msg = MIMEMultipart('alternative')  # Message container를 생성
 

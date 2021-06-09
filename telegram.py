@@ -2,6 +2,8 @@ import telepot
 import time
 import telegram_conn
 
+TOKEN = ''
+
 def handle(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
     if content_type == 'location':
@@ -9,7 +11,7 @@ def handle(msg):
         for i in info:
             sendMessage(chat_id, i)
     else:
-        pass
+        sendMessage(chat_id, "저에게 위치를 보내주시면 근처의 약국을 찾아 드릴께요!")
 
 def sendMessage(user, msg):
     try:
