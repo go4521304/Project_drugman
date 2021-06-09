@@ -239,7 +239,9 @@ class Medi:
         Send.configure(image= Gimage)
         Send.image = Gimage
         Send.pack(side='top')
-        Label(detail, text= "글자수: " + str(spam.strlen(self.info)//2), font=TempFont).pack(side='top')
+        
+        tmp = spam.strlen(self.info)
+        Label(detail, text= "글자수: " + str(tmp), font=TempFont).pack(side='top')
 
         RenderText.pack(side='left')
         RenderTextScrollbar.pack(side='right', fill='y')
