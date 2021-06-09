@@ -8,4 +8,12 @@ pharmacy_conn.py
 setup.py
 telegram.py
 telegram_conn.py
-¿¹Á¦.py
+resource\address_list.json
+resource\logo-gmail.png
+resource\medicine.png
+resource\medicine2.png
+resource\pharmacy.png
+resource\pharmacy2.png
+resource\search.png
+resource\search2.png
+resource\text.png
