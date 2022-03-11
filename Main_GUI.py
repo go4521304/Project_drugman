@@ -69,7 +69,7 @@ class Main_GUI:
         self.Search = Button(frameB, text='검', image=image['search'], command=self.Click_S, relief='flat',bg='white')
 
         self.Text = Button(self.canvas_C, image=image['textImg'],relief='flat')
-        self.textImg = Button(frameB, text='글', image=image['textImg'], relief='flat',bg='white')
+        self.textImg = Button(frameB, text='글', image=image['textImg'], relief='flat',bg='white',command=self.Origin)
         # 디버그용 그리드
         #for i in range(4):
         #    for j in range(9):
@@ -103,6 +103,10 @@ class Main_GUI:
     def Click_S(self):
         self.window.geometry('1200x900')
         self.Draw_S()
+
+    def Origin(self):
+        self.window.geometry('330x900')
+
 
 def onTelegram():
     args = ['telegram.exe']
