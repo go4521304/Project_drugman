@@ -18,4 +18,4 @@
 ### 3. [최종 발표 (Link)](https://youtu.be/gVyeVjX2zFQ)
 <br>
 
-## Licences
+### [LICENSE](LICENSE.txt)
