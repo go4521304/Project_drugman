@@ -18,4 +18,15 @@
 ### 3. [최종 발표 (Link)](https://youtu.be/gVyeVjX2zFQ)
 <br>
 
-### [LICENSE](LICENSE.txt)
+## Credits
+#### This project is licensed under the terms of [the MIT license](https://github.com/go4521304/Project_drugman/blob/feature/main_gui/LICENSE).  
+#### We used these following software and open source project.
+- #### [Python](https://www.python.org/)
+- #### [cpython](https://github.com/python/cpython)
+- #### [folium](https://github.com/python-visualization/folium)
+- #### [OpenAPI](https://github.com/OAI/OpenAPI-Specification)
+- #### [Pillow](https://github.com/python-pillow/Pillow)
+- #### [JSON](https://www.json.org)
+- #### [pandas](https://github.com/pandas-dev/pandas)
+- #### [BeautifulSoup](https://github.com/akalongman/python-beautifulsoup)
+- #### [CEF Python](https://github.com/cztomczak/cefpython)
