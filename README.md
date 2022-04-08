@@ -18,6 +18,11 @@
 ### 3. [최종 발표 (Link)](https://youtu.be/gVyeVjX2zFQ)
 <br>
 
+## 활용한 데이터
+- #### [국립중앙의료원_전국 약국 정보 조회 서비스](https://www.data.go.kr/iim/api/selectAPIAcountView.do)
+- #### [식품의약품안전처_의약품개요정보(e약은요)](https://www.data.go.kr/iim/api/selectAPIAcountView.do)
+<br>
+
 ## Credits
 #### This project is licensed under the terms of [the MIT license](https://github.com/go4521304/Project_drugman/blob/feature/main_gui/LICENSE).  
 #### We used these following software and open source project.
