@@ -30,3 +30,4 @@
 - #### [pandas](https://github.com/pandas-dev/pandas)
 - #### [BeautifulSoup](https://github.com/akalongman/python-beautifulsoup)
 - #### [CEF Python](https://github.com/cztomczak/cefpython)
+- #### [telepot](https://github.com/nickoala/telepot)
