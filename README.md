@@ -19,8 +19,8 @@
 <br>
 
 ## 활용한 데이터
-- #### [국립중앙의료원_전국 약국 정보 조회 서비스](https://www.data.go.kr/iim/api/selectAPIAcountView.do)
-- #### [식품의약품안전처_의약품개요정보(e약은요)](https://www.data.go.kr/iim/api/selectAPIAcountView.do)
+- #### [국립중앙의료원_전국 약국 정보 조회 서비스](https://www.data.go.kr/data/15000576/openapi.do)
+- #### [식품의약품안전처_의약품개요정보(e약은요)](https://www.data.go.kr/data/15075057/openapi.do)
 <br>
 
 ## Credits
