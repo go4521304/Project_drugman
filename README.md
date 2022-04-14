@@ -21,6 +21,7 @@
 ## 활용한 데이터
 - #### [국립중앙의료원_전국 약국 정보 조회 서비스](https://www.data.go.kr/data/15000576/openapi.do)
 - #### [식품의약품안전처_의약품개요정보(e약은요)](https://www.data.go.kr/data/15075057/openapi.do)
+<img src="img_opentype01.jpg" width="180" height="70"/>
 <br>
 
 ## Credits
@@ -29,7 +30,6 @@
 - #### [Python](https://www.python.org/)
 - #### [cpython](https://github.com/python/cpython)
 - #### [folium](https://github.com/python-visualization/folium)
-- #### [OpenAPI](https://github.com/OAI/OpenAPI-Specification)
 - #### [Pillow](https://github.com/python-pillow/Pillow)
 - #### [JSON](https://www.json.org)
 - #### [pandas](https://github.com/pandas-dev/pandas)
